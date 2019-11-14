@@ -27,6 +27,9 @@ body main .row .square {
   display: inline-block;
   outline: 1px solid black;
 }
+body main .row .black {
+  background-color: black;
+}
 body footer {
   height: 10%;
   width: 100%;
