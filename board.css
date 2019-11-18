@@ -111,6 +111,12 @@ body main .row .square .queen.black {
   height: 100%;
   width: 100%;
 }
+body main .row .active {
+  background-color: yellow !important;
+}
+body main .row .available {
+  background-color: turquoise !important;
+}
 body footer {
   height: 10%;
   width: 100%;
