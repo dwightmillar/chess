@@ -27,12 +27,11 @@ class Square {
   if (activePiece === '') {
 
     if (this.player === turn) {
-      activePiece = event.currentTarget.id;
-      this.div[0].classList.add('active');
-      const file = activePiece.split('')[0];
-      const rank = parseInt(activePiece.split('')[1]);
+      activePiece = this;
       console.log(activePiece);
-      console.log(event.currentTarget.id);
+      activePiece.div[0].classList.add('active');
+      const file = activePiece.id.split('')[0];
+      const rank = parseInt(activePiece.id.split('')[1]);
 
       switch (this.piece) {
         case 'rook': {
@@ -77,36 +76,64 @@ class Square {
             if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + 1]}${rank}`).children[0].classList) {
               possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + 1]}${rank}`);
               $(`#${columns[columns.findIndex((element) => element === file) + 1]}${rank}`).addClass('available');
+
               if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + 2]}${rank}`).children[0].classList && this.hasMoved === false) {
                 possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + 2]}${rank}`);
                 $(`#${columns[columns.findIndex((element) => element === file) + 2]}${rank}`).addClass('available');
+
               }
             }
+
+          } else if (this.player === 'black') {
+            if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - 1]}${rank}`).children[0].classList) {
+              possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - 1]}${rank}`);
+              $(`#${columns[columns.findIndex((element) => element === file) - 1]}${rank}`).addClass('available');
+
+              if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - 2]}${rank}`).children[0].classList && this.hasMoved === false) {
+                possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - 2]}${rank}`);
+                $(`#${columns[columns.findIndex((element) => element === file) - 2]}${rank}`).addClass('available');
+
+              }
+            }
+
           }
         }
       }
     }
-  } else if (activePiece === event.currentTarget.id) {
-    this.div[0].classList.remove('active');
+  } else if (this === activePiece) {
+    activePiece.div[0].classList.remove('active');
     activePiece = '';
     for(let id in possibleMoves) {
       $(`#${possibleMoves[id]}`).removeClass('available');
     }
     possibleMoves = [];
-  } else if (activePiece !== event.currentTarget.id) {
+  } else if (this !== activePiece) {
     for(let id in possibleMoves) {
       if (event.currentTarget.id === possibleMoves[id]) {
-        var piece = $(`#${activePiece}`).children()[0].classList[0];
-        var color = $(`#${activePiece}`).children()[0].classList[1];
+        // var piece = $(`#${activePiece}`).children()[0].classList[0];
+        // var color = $(`#${activePiece}`).children()[0].classList[1];
+        var piece = activePiece.piece;
+        var player = activePiece.player;
 
-        $(`#${event.currentTarget.id}`).children()[0].classList = `${piece} ${color}`;
-        $(`#${activePiece}`)[0].classList.remove('active');
-        $(`#${activePiece}`).children()[0].remove();
+
+        $(`#${event.currentTarget.id}`).children()[0].classList = `${piece} ${player}`;
+        this.piece = piece;
+        this.player = player;
+
+        activePiece.div[0].classList.remove('active');
+        activePiece.div[0].children[0].remove();
         activePiece = '';
         for (let id in possibleMoves) {
           $(`#${possibleMoves[id]}`).removeClass('available');
         }
         possibleMoves = [];
+
+        if (turn === 'white') {
+          turn = 'black'
+        } else {
+          turn = 'white'
+        }
+        console.log(turn);
       }
     }
   }
