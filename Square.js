@@ -11,7 +11,7 @@ class Square {
     this.div = $(`<div id=${this.id}
               class="square"
               style=min-width:62.5px;background-color:${this.color};>
-                <div class="${piece} ${this.player}">
+                <div class="${this.player} ${piece}">
                 </div>
               </div>`).click(this.move)
 
@@ -24,39 +24,29 @@ class Square {
   move(event) {
 
   if (activePiece === '') {
-
     if (this.player === turn) {
       activePiece = this;
-      console.log(activePiece);
       activePiece.div[0].classList.add('active');
-      const file = activePiece.id.split('')[0];
-      const rank = parseInt(activePiece.id.split('')[1]);
+
 
       switch (this.piece) {
         case 'rook': {
-          // let possibleMove = '';
-          // let squareCount = 1;
-          // console.log(document.getElementById(`${file}${rank + squareCount}`).children[0].classList);
-          // while(possibleMove) {
-          //   if (!document.getElementById(`${file}${rank + squareCount}`)) {
-          //     if (document.getElementById(`${file}${rank + squareCount}`).children[0].classList) {
-          //       possibleMove = `${rank + squareCount}`;
-          //     }
-          //   }
-          //   if (!document.getElementById(`${file}${rank - squareCount}`)) {
-          //     console.log()
-          //     break;
-          //   }
-          //   if (!document.getElementById(`${columns[columns.findIndex(file) + squareCount]}${rank}`)) {
-          //     console.log()
-          //     break;
-          //   }
-          //   if (!document.getElementById(`${columns[columns.findIndex(file) - squareCount]}${rank}`)) {
-          //     console.log()
-          //     break;
-          //   }
-          //   squareCount++;
-          // }
+          let squareCount = 1;
+          while (CheckUpMove(squareCount, activePiece)) {
+            ++squareCount;
+          }
+          squareCount = 1;
+          while (CheckDownMove(squareCount, activePiece)) {
+            ++squareCount;
+          }
+          squareCount = 1;
+          while (CheckRightMove(squareCount, activePiece)) {
+            ++squareCount;
+          }
+          squareCount = 1;
+          while (CheckLeftMove(squareCount, activePiece)) {
+            ++squareCount;
+          }
         } break;
         case 'knight': {
           null;
@@ -73,48 +63,27 @@ class Square {
         case 'pawn': {
           if (this.player === 'white') {
 
-            if (!document.getElementById(`${columns[columns.findIndex((element) => element === file) + 1]}${rank}`).children[0].classList.length) {
-              possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + 1]}${rank}`);
-              $(`#${columns[columns.findIndex((element) => element === file) + 1]}${rank}`).addClass('available');
-              if (!document.getElementById(`${columns[columns.findIndex((element) => element === file) + 2]}${rank}`).children[0].classList.length && $(`#${activePiece.id}`).children()[0].classList[1] == 1) {
-                possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + 2]}${rank}`);
-                $(`#${columns[columns.findIndex((element) => element === file) + 2]}${rank}`).addClass('available');
-
+            if (CheckDownMove(1, activePiece)) {
+              if (this.div.children()[0].classList[2] == 1) {
+                CheckDownMove(2, activePiece);
               }
             }
 
-            if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + 1]}${rank + 1}`).children[0].classList[1] === 'black') {
-              possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + 1]}${rank + 1}`);
-              $(`#${columns[columns.findIndex((element) => element === file) + 1]}${rank + 1}`).addClass('available');
-            }
+            CheckDownRightMove(1, activePiece);
 
-            if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + 1]}${rank - 1}`).children[0].classList[1] === 'black') {
-              possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + 1]}${rank - 1}`);
-              $(`#${columns[columns.findIndex((element) => element === file) + 1]}${rank - 1}`).addClass('available');
-            }
+            CheckDownLeftMove(1, activePiece);
 
           } else if (this.player === 'black') {
 
-            if (!document.getElementById(`${columns[columns.findIndex((element) => element === file) - 1]}${rank}`).children[0].classList.length) {
-              possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - 1]}${rank}`);
-              $(`#${columns[columns.findIndex((element) => element === file) - 1]}${rank}`).addClass('available');
-
-              if (!document.getElementById(`${columns[columns.findIndex((element) => element === file) - 2]}${rank}`).children[0].classList.length && $(`#${activePiece.id}`).children()[0].classList[1] == 1) {
-                possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - 2]}${rank}`);
-                $(`#${columns[columns.findIndex((element) => element === file) - 2]}${rank}`).addClass('available');
-
+            if (CheckUpMove(1, activePiece)) {
+              if (this.div.children()[0].classList[2] == 1) {
+                CheckUpMove(2, activePiece);
               }
             }
 
-            if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - 1]}${rank + 1}`).children[0].classList[1] === 'white') {
-              possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - 1]}${rank + 1}`);
-              $(`#${columns[columns.findIndex((element) => element === file) - 1]}${rank + 1}`).addClass('available');
-            }
+            CheckUpLeftMove(1, activePiece);
 
-            if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - 1]}${rank - 1}`).children[0].classList[1] === 'white') {
-              possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - 1]}${rank - 1}`);
-              $(`#${columns[columns.findIndex((element) => element === file) - 1]}${rank - 1}`).addClass('available');
-            }
+            CheckUpRightMove(1, activePiece);
           }
         }
       }
@@ -122,26 +91,26 @@ class Square {
   } else if (this === activePiece) {
     activePiece.div[0].classList.remove('active');
     activePiece = '';
-    for(let id in possibleMoves) {
-      $(`#${possibleMoves[id]}`).removeClass('available');
+    for(let moveIndex in possibleMoves) {
+      $(`#${possibleMoves[moveIndex]}`).removeClass('available');
     }
     possibleMoves = [];
   } else if (this !== activePiece) {
-    for(let id in possibleMoves) {
-      if (event.currentTarget.id === possibleMoves[id]) {
+    for(let moveIndex in possibleMoves) {
+      if (event.currentTarget.id === possibleMoves[moveIndex]) {
+
         var piece = activePiece.piece;
         var player = activePiece.player;
 
-        console.log(piece.split(' ')[0]);
-        $(`#${event.currentTarget.id}`).children()[0].classList = `${piece.split(' ')[0]} ${player}`;
+        $(`#${event.currentTarget.id}`).children()[0].classList = ` ${player} ${piece.split(' ')[0]}`;
         this.piece = piece;
         this.player = player;
 
         activePiece.div[0].classList.remove('active');
-        activePiece.div[0].children[0].remove();
+        activePiece.div[0].children[0].classList = '';
         activePiece = '';
-        for (let id in possibleMoves) {
-          $(`#${possibleMoves[id]}`).removeClass('available');
+        for (let moveIndex in possibleMoves) {
+          $(`#${possibleMoves[moveIndex]}`).removeClass('available');
         }
         possibleMoves = [];
 
@@ -155,4 +124,172 @@ class Square {
     }
   }
 }
+}
+
+function CheckLeftMove(spaces, activePiece) {
+  const file = activePiece.id.split('')[0];
+  const rank = parseInt(activePiece.id.split('')[1]);
+  let opponent = '';
+  if (activePiece.player === 'white') {
+    opponent = 'black';
+  } else {
+    opponent = 'white';
+  }
+
+  if (document.getElementById(`${columns[columns.findIndex((element) => element === file)]}${rank - spaces}`)) {
+    if (document.getElementById(`${columns[columns.findIndex((element) => element === file)]}${rank - spaces}`).children[0].classList[0] === activePiece.player) {
+      return false;
+    } else if (document.getElementById(`${columns[columns.findIndex((element) => element === file)]}${rank - spaces}`).children[0].classList[0] === opponent) {
+      possibleMoves.push(`${columns[columns.findIndex((element) => element === file)]}${rank - spaces}`);
+      $(`#${columns[columns.findIndex((element) => element === file)]}${rank - spaces}`).addClass('available');
+      return false;
+    } else {
+      possibleMoves.push(`${columns[columns.findIndex((element) => element === file)]}${rank - spaces}`);
+      $(`#${columns[columns.findIndex((element) => element === file)]}${rank - spaces}`).addClass('available');
+      return true;
+    }
+  }
+}
+
+function CheckRightMove(spaces, activePiece) {
+  const file = activePiece.id.split('')[0];
+  const rank = parseInt(activePiece.id.split('')[1]);
+  let opponent = '';
+  if (activePiece.player === 'white') {
+    opponent = 'black';
+  } else {
+    opponent = 'white';
+  }
+
+  if (document.getElementById(`${columns[columns.findIndex((element) => element === file)]}${rank + spaces}`)) {
+    if (document.getElementById(`${columns[columns.findIndex((element) => element === file)]}${rank + spaces}`).children[0].classList[0] === activePiece.player) {
+      return false;
+    } else if (document.getElementById(`${columns[columns.findIndex((element) => element === file)]}${rank + spaces}`).children[0].classList[0] === opponent) {
+      possibleMoves.push(`${columns[columns.findIndex((element) => element === file)]}${rank + spaces}`);
+      $(`#${columns[columns.findIndex((element) => element === file)]}${rank + spaces}`).addClass('available');
+      return false;
+    } else {
+      possibleMoves.push(`${columns[columns.findIndex((element) => element === file)]}${rank + spaces}`);
+      $(`#${columns[columns.findIndex((element) => element === file)]}${rank + spaces}`).addClass('available');
+      return true;
+    }
+  }
+}
+
+function CheckUpMove(spaces, activePiece) {
+  const file = activePiece.id.split('')[0];
+  const rank = parseInt(activePiece.id.split('')[1]);
+  let opponent = '';
+  if (activePiece.player === 'white') {
+    opponent = 'black';
+  } else {
+    opponent = 'white';
+  }
+
+  if (activePiece.piece === 'pawn') {
+    if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank}`)) {
+      if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank}`).children[0].classList.length === 0) {
+        possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank}`);
+        $(`#${columns[columns.findIndex((element) => element === file) - spaces]}${rank}`).addClass('available');
+        return true;
+      }
+    }
+  } else {
+    if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank}`)) {
+      if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank}`).children[0].classList[0] === activePiece.player) {
+        return false;
+      } else if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank}`).children[0].classList[0] === opponent) {
+        possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank}`);
+        $(`#${columns[columns.findIndex((element) => element === file) - spaces]}${rank}`).addClass('available');
+        return false;
+      } else {
+        possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank}`);
+        $(`#${columns[columns.findIndex((element) => element === file) - spaces]}${rank}`).addClass('available');
+        return true;
+      }
+    }
+  }
+}
+
+function CheckDownMove(spaces, activePiece) {
+  const file = activePiece.id.split('')[0];
+  const rank = parseInt(activePiece.id.split('')[1]);
+  let opponent = '';
+  if (activePiece.player === 'white') {
+    opponent = 'black';
+  } else {
+    opponent = 'white';
+  }
+
+  if (activePiece.piece === 'pawn') {
+    if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank}`)) {
+      if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank}`).children[0].classList.length === 0) {
+        possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank}`);
+        $(`#${columns[columns.findIndex((element) => element === file) + spaces]}${rank}`).addClass('available');
+        return true;
+      }
+    }
+  } else {
+    if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank}`)) {
+      if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank}`).children[0].classList[0] === activePiece.player) {
+        return false;
+      } else if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank}`).children[0].classList[0] === opponent) {
+        possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank}`);
+        $(`#${columns[columns.findIndex((element) => element === file) + spaces]}${rank}`).addClass('available');
+        return false;
+      } else {
+        possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank}`);
+        $(`#${columns[columns.findIndex((element) => element === file) + spaces]}${rank}`).addClass('available');
+        return true;
+      }
+    }
+  }
+}
+
+function CheckDownRightMove(spaces, activePiece) {
+  const file = activePiece.id.split('')[0];
+  const rank = parseInt(activePiece.id.split('')[1]);
+
+  if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank + spaces}`)) {
+    if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank + spaces}`).children[0].classList[0] === 'black') {
+      possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank + spaces}`);
+      $(`#${columns[columns.findIndex((element) => element === file) + spaces]}${rank + spaces}`).addClass('available');
+    }
+  }
+}
+
+function CheckDownLeftMove(spaces, activePiece) {
+  const file = activePiece.id.split('')[0];
+  const rank = parseInt(activePiece.id.split('')[1]);
+
+  if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank - spaces}`)) {
+    if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank - spaces}`).children[0].classList[0] === 'black') {
+      possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + spaces]}${rank - spaces}`);
+      $(`#${columns[columns.findIndex((element) => element === file) + spaces]}${rank - spaces}`).addClass('available');
+    }
+  }
+}
+
+function CheckUpRightMove(spaces, activePiece) {
+  const file = activePiece.id.split('')[0];
+  const rank = parseInt(activePiece.id.split('')[1]);
+
+  if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank + spaces}`)) {
+    if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank + spaces}`).children[0].classList[0] === 'white') {
+      possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank + spaces}`);
+      $(`#${columns[columns.findIndex((element) => element === file) - spaces]}${rank + spaces}`).addClass('available');
+    }
+  }
+}
+
+function CheckUpLeftMove(spaces, activePiece) {
+  const file = activePiece.id.split('')[0];
+  const rank = parseInt(activePiece.id.split('')[1]);
+
+  if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank - spaces}`)) {
+    if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank - spaces}`).children[0].classList[0] === 'white') {
+      possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - spaces]}${rank - spaces}`);
+      $(`#${columns[columns.findIndex((element) => element === file) - spaces]}${rank - spaces}`).addClass('available');
+    }
+  }
 }
