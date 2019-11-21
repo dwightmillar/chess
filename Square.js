@@ -140,6 +140,8 @@ class Square {
           }
         }
       }
+      $(".king")[0].parentElement.classList.remove('available');
+      $(".king")[1].parentElement.classList.remove('available');
     }
   } else if (this === activePiece) {
     activePiece.div[0].classList.remove('active');
@@ -149,31 +151,29 @@ class Square {
     }
     possibleMoves = [];
   } else if (this !== activePiece) {
-    for(let moveIndex in possibleMoves) {
-      if (event.currentTarget.id === possibleMoves[moveIndex]) {
+    if (event.currentTarget.classList[1] === 'available') {
 
-        var piece = activePiece.piece;
-        var player = activePiece.player;
+      var piece = activePiece.piece;
+      var player = activePiece.player;
 
-        $(`#${event.currentTarget.id}`).children()[0].classList = ` ${player} ${piece.split(' ')[0]}`;
-        this.piece = piece;
-        this.player = player;
+      $(`#${event.currentTarget.id}`).children()[0].classList = ` ${player} ${piece.split(' ')[0]}`;
+      this.piece = piece;
+      this.player = player;
 
-        activePiece.div[0].classList.remove('active');
-        activePiece.div[0].children[0].classList = '';
-        activePiece = '';
-        for (let moveIndex in possibleMoves) {
-          $(`#${possibleMoves[moveIndex]}`).removeClass('available');
-        }
-        possibleMoves = [];
-
-        if (turn === 'white') {
-          turn = 'black'
-        } else {
-          turn = 'white'
-        }
-        console.log(turn);
+      activePiece.div[0].classList.remove('active');
+      activePiece.div[0].children[0].classList = '';
+      activePiece = '';
+      for (let moveIndex in possibleMoves) {
+        $(`#${possibleMoves[moveIndex]}`).removeClass('available');
       }
+      possibleMoves = [];
+
+      if (turn === 'white') {
+        turn = 'black'
+      } else {
+        turn = 'white'
+      }
+      console.log(turn);
     }
   }
 }
