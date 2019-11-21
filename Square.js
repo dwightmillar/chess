@@ -155,8 +155,12 @@ class Square {
 
       var piece = activePiece.piece;
       var player = activePiece.player;
+      console.log(this);
 
-      $(`#${event.currentTarget.id}`).children()[0].classList = ` ${player} ${piece.split(' ')[0]}`;
+      activePiece.piece = '';
+      activePiece.player = '';
+
+      this.div[0].children[0].classList = ` ${player} ${piece.split(' ')[0]}`;
       this.piece = piece;
       this.player = player;
 
