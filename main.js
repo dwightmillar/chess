@@ -73,7 +73,7 @@ function loadBoard() {
       }
 
       if (rowCount === 2 || rowCount === 7) {
-        piece = 'pawn';
+        piece = 'pawn 1';
       } else if (rowCount === 1 || rowCount === 8) {
         piece = pieces[squareCount - 1];
       }

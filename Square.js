@@ -2,9 +2,8 @@ class Square {
   constructor(id, color, piece = '', player = '') {
     this.id = id,
     this.color = color,
-    this.piece = piece,
+    this.piece = piece.split(' ')[0],
     this.player = player,
-    this.hasMoved = false;
 
     this.move = this.move.bind(this);
 
@@ -12,7 +11,7 @@ class Square {
     this.div = $(`<div id=${this.id}
               class="square"
               style=min-width:62.5px;background-color:${this.color};>
-                <div class="${this.piece} ${this.player}">
+                <div class="${piece} ${this.player}">
                 </div>
               </div>`).click(this.move)
 
@@ -73,29 +72,49 @@ class Square {
         } break;
         case 'pawn': {
           if (this.player === 'white') {
-            if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + 1]}${rank}`).children[0].classList) {
+
+            if (!document.getElementById(`${columns[columns.findIndex((element) => element === file) + 1]}${rank}`).children[0].classList.length) {
               possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + 1]}${rank}`);
               $(`#${columns[columns.findIndex((element) => element === file) + 1]}${rank}`).addClass('available');
-
-              if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + 2]}${rank}`).children[0].classList && this.hasMoved === false) {
+              if (!document.getElementById(`${columns[columns.findIndex((element) => element === file) + 2]}${rank}`).children[0].classList.length && $(`#${activePiece.id}`).children()[0].classList[1] == 1) {
                 possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + 2]}${rank}`);
                 $(`#${columns[columns.findIndex((element) => element === file) + 2]}${rank}`).addClass('available');
 
               }
             }
 
+            if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + 1]}${rank + 1}`).children[0].classList[1] === 'black') {
+              possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + 1]}${rank + 1}`);
+              $(`#${columns[columns.findIndex((element) => element === file) + 1]}${rank + 1}`).addClass('available');
+            }
+
+            if (document.getElementById(`${columns[columns.findIndex((element) => element === file) + 1]}${rank - 1}`).children[0].classList[1] === 'black') {
+              possibleMoves.push(`${columns[columns.findIndex((element) => element === file) + 1]}${rank - 1}`);
+              $(`#${columns[columns.findIndex((element) => element === file) + 1]}${rank - 1}`).addClass('available');
+            }
+
           } else if (this.player === 'black') {
-            if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - 1]}${rank}`).children[0].classList) {
+
+            if (!document.getElementById(`${columns[columns.findIndex((element) => element === file) - 1]}${rank}`).children[0].classList.length) {
               possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - 1]}${rank}`);
               $(`#${columns[columns.findIndex((element) => element === file) - 1]}${rank}`).addClass('available');
 
-              if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - 2]}${rank}`).children[0].classList && this.hasMoved === false) {
+              if (!document.getElementById(`${columns[columns.findIndex((element) => element === file) - 2]}${rank}`).children[0].classList.length && $(`#${activePiece.id}`).children()[0].classList[1] == 1) {
                 possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - 2]}${rank}`);
                 $(`#${columns[columns.findIndex((element) => element === file) - 2]}${rank}`).addClass('available');
 
               }
             }
 
+            if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - 1]}${rank + 1}`).children[0].classList[1] === 'white') {
+              possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - 1]}${rank + 1}`);
+              $(`#${columns[columns.findIndex((element) => element === file) - 1]}${rank + 1}`).addClass('available');
+            }
+
+            if (document.getElementById(`${columns[columns.findIndex((element) => element === file) - 1]}${rank - 1}`).children[0].classList[1] === 'white') {
+              possibleMoves.push(`${columns[columns.findIndex((element) => element === file) - 1]}${rank - 1}`);
+              $(`#${columns[columns.findIndex((element) => element === file) - 1]}${rank - 1}`).addClass('available');
+            }
           }
         }
       }
@@ -110,13 +129,11 @@ class Square {
   } else if (this !== activePiece) {
     for(let id in possibleMoves) {
       if (event.currentTarget.id === possibleMoves[id]) {
-        // var piece = $(`#${activePiece}`).children()[0].classList[0];
-        // var color = $(`#${activePiece}`).children()[0].classList[1];
         var piece = activePiece.piece;
         var player = activePiece.player;
 
-
-        $(`#${event.currentTarget.id}`).children()[0].classList = `${piece} ${player}`;
+        console.log(piece.split(' ')[0]);
+        $(`#${event.currentTarget.id}`).children()[0].classList = `${piece.split(' ')[0]} ${player}`;
         this.piece = piece;
         this.player = player;
 
