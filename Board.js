@@ -1,6 +1,7 @@
 class Board {
   constructor() {
     this.squares = {};
+    this.possibleMoves = {};
 
     const files = ['a','b','c','d','e','f','g','h'];
     const pieces = ['Rook','Knight','Bishop','Queen','King', 'Bishop', 'Knight', 'Rook'];
@@ -46,15 +47,12 @@ class Board {
           player = 'black';
           this.squares[`${files[fileIndex]}${rankIndex}`] = (new Square(files[fileIndex], rankIndex, piece, player, color));
         } else {
+          player = '';
           this.squares[`${files[fileIndex]}${rankIndex}`] = (new Square(files[fileIndex], rankIndex, piece, player, color));
         }
       }
     }
 
-    let Board = [];
-    for (let squareIndex in this.squares) {
-      Board.push(this.squares[squareIndex]);
-    }
-    return Board;
+    return this.squares;
   }
 }
