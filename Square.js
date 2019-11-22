@@ -2,7 +2,8 @@ class Square {
   constructor(file, rank, piece, player, color) {
     this.space = $('<div>', {
                   id: `${file}${rank}`,
-                  class: `square ${color}`
+                  class: `square`,
+                  style: `background-color: ${color};`
                   });
 
     this.piece = $('<div>', {
@@ -11,6 +12,6 @@ class Square {
 
     this.div = this.space.append(this.piece);
 
-    return this.div[0]
+    return this.div
   }
 }
