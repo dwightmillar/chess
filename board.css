@@ -1,0 +1,118 @@
+body {
+  margin: 0;
+}
+
+main {
+  height: 40vw;
+  width: 40vw;
+  margin: auto;
+}
+
+.rank {
+  height: 12.5%;
+  width: 100%;
+}
+
+.square.white {
+  background-color: white;
+}
+
+.square.black {
+  background-color: black;
+}
+
+.square {
+  height: 100%;
+  width: 12.5%;
+  display: inline-block;
+  flex: 1 1 10vw;
+}
+.square * {
+  z-index: 2;
+}
+.square .white.Rook {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/rook-white.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.square .white.Pawn {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/pawn-white.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.square .white.Knight {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/knight-white.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.square .white.Bishop {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/bishop-white.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.square .white.Queen {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/queen-white.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.square .white.King {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/king-white.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.square .black.Rook {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/rook-black.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.square .black.Pawn {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/pawn-black.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.square .black.Knight {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/knight-black.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.square .black.Bishop {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/bishop-black.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.square .black.Queen {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/queen-black.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.square .black.King {
+  height: 100%;
+  width: 100%;
+  background-image: url("/images/king-black.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/*# sourceMappingURL=board.css.map */

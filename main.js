@@ -1,7 +1,15 @@
-window.onload = loadBoard();
+// window.onload = loadBoard();
 
-function loadBoard() {
-  const Board = new Board();
+// function loadBoard() {
+  const newBoard = new Board();
+  let rank = '';
 
-  $('main').append(Board);
-}
+  for (let rankIndex = 0; rankIndex < 8; rankIndex++) {
+    rank = $("<div/>", { class: 'rank' })
+    for (let squareIndex = 0; squareIndex < 8; squareIndex++) {
+      console.log(newBoard);
+      rank.append(newBoard.shift());
+    }
+    $('main').append(rank);
+  }
+// }

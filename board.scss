@@ -1,0 +1,120 @@
+$squareLength: 40vw;
+
+body {
+  margin: 0;
+}
+
+main {
+  height: $squareLength;
+  width: $squareLength;
+  margin: auto;
+}
+
+.rank {
+  height: 12.5%;
+  width: 100%;
+}
+
+.square.white {
+  background-color: white;
+}
+
+.square.black {
+  background-color: black;
+}
+
+.square {
+  height: 100%;
+  width: 12.5%;
+  display: inline-block;
+  flex: 1 1 10vw;
+
+  * {
+    z-index: 2;
+  }
+
+  .white.Rook {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/rook-white.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .white.Pawn {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/pawn-white.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .white.Knight {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/knight-white.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .white.Bishop {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/bishop-white.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .white.Queen {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/queen-white.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .white.King {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/king-white.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .black.Rook {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/rook-black.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .black.Pawn {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/pawn-black.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .black.Knight {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/knight-black.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .black.Bishop {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/bishop-black.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .black.Queen {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/queen-black.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .black.King {
+    height: 100%;
+    width: 100%;
+    background-image: url('/images/king-black.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
