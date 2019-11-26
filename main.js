@@ -1,18 +1,36 @@
 
-  let board = new Board();
   let rank = '';
-  let possibleMoves = [];
+  let allPossibleMoves = {};
   let activePiece = '';
+  const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+  const pieces = ['Rook', 'Knight', 'Bishop', 'Queen', 'King', 'Bishop', 'Knight', 'Rook'];
 
-  let squares = [];
-  for (let squareIndex in board) {
-    squares.push(board[squareIndex]);
-  }
 
-  for (let rankIndex = 0; rankIndex < 8; rankIndex++) {
-    rank = $("<div/>", { class: 'file' })
-    for (let squareIndex = 0; squareIndex < 8; squareIndex++) {
-      rank.append(squares[(rankIndex * 8) + squareIndex]);
+  let board = new Board();
+
+  window.onload = loadBoard(board);
+
+  function loadBoard(boardData) {
+
+    let squares = [];
+
+    $('.file').remove();
+
+    for (let squareIndex in boardData) {
+      let Square = boardData[squareIndex];
+      squares.push(Square);
+      if (!Square.updatePossibleMoves) {
+        continue;
+      }
+      Square.updatePossibleMoves();
     }
-    $('main').append(rank);
+    // console.log(squares);
+    // console.log(allPossibleMoves);
+    for (let rankIndex = 0; rankIndex < 8; rankIndex++) {
+      rank = $("<div/>", { class: 'file' })
+      for (let squareIndex = 0; squareIndex < 8; squareIndex++) {
+        rank.append(squares[(rankIndex * 8) + squareIndex].div);
+      }
+      $('main').append(rank);
+    }
   }

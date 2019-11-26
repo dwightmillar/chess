@@ -17,6 +17,7 @@ main {
 .square {
   height: 12.5%;
   width: 100%;
+  outline: 1px solid black;
 }
 .square .white.Rook {
   height: 100%;

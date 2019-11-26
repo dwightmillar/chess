@@ -1,10 +1,7 @@
 class Board {
   constructor() {
     this.squares = {};
-    this.possibleMoves = {};
 
-    const files = ['a','b','c','d','e','f','g','h'];
-    const pieces = ['Rook','Knight','Bishop','Queen','King', 'Bishop', 'Knight', 'Rook'];
     let piece = '';
     let player = '';
     let color = '';
@@ -31,28 +28,108 @@ class Board {
         if (rankIndex === 2) {
           piece = 'Pawn';
           player = 'white';
-          this.squares[`${files[fileIndex]}${rankIndex}`] = (new Square(files[fileIndex], rankIndex, piece, player, color));
+          switch (piece) {
+            case 'Pawn': {
+              piece = new Pawn(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Rook': {
+              piece = new Rook(this.player);
+            } break;
+            case 'Knight': {
+              piece = new Knight(this.player);
+            } break;
+            case 'Bishop': {
+              piece = new Bishop(this.player);
+            } break;
+            case 'Queen': {
+              piece = new Queen(this.player);
+            } break;
+            case 'King': {
+              piece = new King(this.player);
+            }
+          }
+          this.squares[`${files[fileIndex]}${rankIndex}`] = piece;
         } else if (rankIndex === 7) {
           piece = 'Pawn';
           player = 'black';
-          this.squares[`${files[fileIndex]}${rankIndex}`] = (new Square(files[fileIndex], rankIndex, piece, player, color));
+          switch (piece) {
+            case 'Pawn': {
+              piece = new Pawn(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Rook': {
+              piece = new Rook(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Knight': {
+              piece = new Knight(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Bishop': {
+              piece = new Bishop(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Queen': {
+              piece = new Queen(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'King': {
+              piece = new King(files[fileIndex], rankIndex, piece, player, color);
+            }
+          }
+          this.squares[`${files[fileIndex]}${rankIndex}`] = piece;
         }
 
           else if (rankIndex === 1) {
           piece = pieces[fileIndex];
           player = 'white';
-          this.squares[`${files[fileIndex]}${rankIndex}`] = (new Square(files[fileIndex], rankIndex, piece, player, color));
+          switch (piece) {
+            case 'Pawn': {
+              piece = new Pawn(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Rook': {
+              piece = new Rook(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Knight': {
+              piece = new Knight(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Bishop': {
+              piece = new Bishop(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Queen': {
+              piece = new Queen(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'King': {
+              piece = new King(files[fileIndex], rankIndex, piece, player, color);
+            }
+          }
+          this.squares[`${files[fileIndex]}${rankIndex}`] = piece;
         } else if (rankIndex === 8) {
-          piece = pieces[8 - fileIndex];
+          piece = pieces[7 - fileIndex];
           player = 'black';
-          this.squares[`${files[fileIndex]}${rankIndex}`] = (new Square(files[fileIndex], rankIndex, piece, player, color));
+          switch (piece) {
+            case 'Pawn': {
+              piece = new Pawn(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Rook': {
+              piece = new Rook(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Knight': {
+              piece = new Knight(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Bishop': {
+              piece = new Bishop(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'Queen': {
+              piece = new Queen(files[fileIndex], rankIndex, piece, player, color);
+            } break;
+            case 'King': {
+              piece = new King(files[fileIndex], rankIndex, piece, player, color);
+            }
+          }
+          this.squares[`${files[fileIndex]}${rankIndex}`] = piece;
         } else {
           player = '';
-          this.squares[`${files[fileIndex]}${rankIndex}`] = (new Square(files[fileIndex], rankIndex, piece, player, color));
+          this.squares[`${files[fileIndex]}${rankIndex}`] = (new Square(files[fileIndex], rankIndex, player, color));
         }
       }
     }
-
+    // console.log(this.squares);
     return this.squares;
   }
 }
