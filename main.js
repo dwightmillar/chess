@@ -4,6 +4,7 @@
   let activePiece = '';
   const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   const pieces = ['Rook', 'Knight', 'Bishop', 'Queen', 'King', 'Bishop', 'Knight', 'Rook'];
+  let playerTurn = 'white';
 
 
   let board = new Board();

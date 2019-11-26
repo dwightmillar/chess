@@ -16,7 +16,7 @@ class Square {
   }
 
   move(event) {
-    if (!this.piece) {
+    if (!this.piece || this.player !== playerTurn) {
       return null;
     }
 
@@ -65,6 +65,11 @@ class Square {
             activePiece.div[0].style.backgroundColor = activePiece.color;
             possibleMoves = [];
             activePiece = '';
+            if (playerTurn === 'white') {
+              playerTurn = 'black';
+            } else {
+              playerTurn = 'white';
+            }
             loadBoard(board);
           });
         }
