@@ -2,7 +2,6 @@ class Rook extends Square {
   constructor(file, rank, piece, player, color) {
     super(file, rank, player, color);
     this.hasMoved = false;
-    this.move = this.move.bind(this);
     this.piece = $('<div>', {
       class: `${player} Rook`
     })
@@ -85,6 +84,12 @@ class Rook extends Square {
       }
       ++squareCount;
     }
-    // console.log(allPossibleMoves[this.id]);
+    if (this.player === isInCheck) {
+      for (let square in allPossibleMoves[this.id]) {
+        if (square.id !== threateningPiece) {
+          delete allPossibleMoves[this.id][square];
+        }
+      }
+    }
   }
 }

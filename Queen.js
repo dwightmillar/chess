@@ -1,7 +1,6 @@
 class Queen extends Square {
   constructor(file, rank, piece, player, color) {
     super(file, rank, player, color);
-    this.move = this.move.bind(this);
     this.piece = $('<div>', {
       class: `${player} Queen`
     })
@@ -148,6 +147,12 @@ class Queen extends Square {
       }
       ++squareCount;
     }
+    if (this.player === isInCheck) {
+      for (let square in allPossibleMoves[this.id]) {
+        if (square.id !== threateningPiece) {
+          delete allPossibleMoves[this.id][square];
+        }
+      }
+    }
   }
-
 }

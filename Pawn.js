@@ -1,9 +1,6 @@
 class Pawn extends Square {
-  constructor(file, rank, piece, player, color) {
-    super(file, rank, player, color);
-    this.hasMoved = false;
-    this.move = this.move.bind(this);
-    this.updatePossibleMoves = this.updatePossibleMoves.bind(this);
+  constructor(file, rank, piece, player, color, hasMoved) {
+    super(file, rank, player, color, hasMoved);
     this.piece = $('<div>', {
       class: `${player} Pawn`
     })
@@ -20,6 +17,7 @@ class Pawn extends Square {
     var leftDiagonalSquare = { square: null };
     var rightDiagonalSquare = { square: null };
     allPossibleMoves[this.id] = [];
+
 
     switch(this.player) {
       case 'white': {
@@ -47,7 +45,7 @@ class Pawn extends Square {
 
     if (!oneSquareForward.piece) {
       allPossibleMoves[this.id].push(oneSquareForward);
-      if (!twoSquaresForward.piece) {
+      if (!twoSquaresForward.piece && !this.hasMoved) {
         allPossibleMoves[this.id].push(twoSquaresForward);
       }
     }
@@ -57,6 +55,14 @@ class Pawn extends Square {
     }
     if (rightDiagonalSquare.player && rightDiagonalSquare.player !== this.player) {
       allPossibleMoves[this.id].push(rightDiagonalSquare);
+    }
+
+    if (this.player === isInCheck) {
+      for (let square in allPossibleMoves[this.id]) {
+        if (square.id !== threateningPiece) {
+          delete allPossibleMoves[this.id][square];
+        }
+      }
     }
   }
 }

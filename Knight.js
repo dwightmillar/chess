@@ -1,7 +1,6 @@
 class Knight extends Square {
   constructor(file, rank, piece, player, color) {
     super(file, rank, player, color);
-    this.move = this.move.bind(this);
     this.piece = $('<div>', {
       class: `${player} Knight`
     })
@@ -83,6 +82,13 @@ class Knight extends Square {
       targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + 1]}${this.rank + 2}`].player;
       if (!targetPlayer || targetPlayer === opponent) {
         allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + 1]}${this.rank + 2}`]);
+      }
+    }
+    if (this.player === isInCheck) {
+      for (let square in allPossibleMoves[this.id]) {
+        if (square.id !== threateningPiece) {
+          delete allPossibleMoves[this.id][square];
+        }
       }
     }
   }

@@ -100,7 +100,7 @@ class Board {
           }
           this.squares[`${files[fileIndex]}${rankIndex}`] = piece;
         } else if (rankIndex === 8) {
-          piece = pieces[7 - fileIndex];
+          piece = pieces[fileIndex];
           player = 'black';
           switch (piece) {
             case 'Pawn': {
