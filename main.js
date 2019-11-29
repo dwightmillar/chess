@@ -27,8 +27,8 @@
       }
       Square.updatePossibleMoves();
     }
-    // console.log(squares);
-    // console.log(allPossibleMoves);
+
+
     for (let rankIndex = 0; rankIndex < 8; rankIndex++) {
       rank = $("<div/>", { class: 'file' })
       for (let squareIndex = 0; squareIndex < 8; squareIndex++) {
@@ -37,15 +37,4 @@
       $('main').append(rank);
     }
     console.log(`It's ${playerTurn}'s turn!`);
-  }
-
-  function escapeCheck(boardData) {
-    for (let squareIndex in boardData) {
-      let Square = boardData[squareIndex];
-      squares.push(Square);
-      if (!Square.updatePossibleMoves) {
-        continue;
-      }
-      Square.updatePossibleMoves();
-    }
   }

@@ -13,6 +13,26 @@ class Knight extends Square {
   updatePossibleMoves() {
     $(this.piece).click(this.move);
     allPossibleMoves[this.id] = [];
+
+    this.checkMove(-2, -1);
+
+    this.checkMove(-2, 1);
+
+    this.checkMove(2, -1);
+
+    this.checkMove(2, 1);
+
+    this.checkMove(-1, -2);
+
+    this.checkMove(-1, 2);
+
+    this.checkMove(1, -2);
+
+    this.checkMove(1, 2);
+
+  }
+
+  checkMove(horizontal, vertical) {
     let targetPlayer = '';
     let opponent = '';
 
@@ -22,73 +42,10 @@ class Knight extends Square {
       opponent = 'white';
     }
 
-    if (board[`${files[files.findIndex((element) => element === this.file) - 2]}${this.rank - 1}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) - 2]}${this.rank - 1}`].player;
+    if (board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`]) {
+      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`].player;
       if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) - 2]}${this.rank - 1}`]);
-      }
-    }
-
-
-    if (board[`${files[files.findIndex((element) => element === this.file) - 2]}${this.rank + 1}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) - 2]}${this.rank + 1}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) - 2]}${this.rank + 1}`]);
-      }
-    }
-
-
-    if (board[`${files[files.findIndex((element) => element === this.file) + 2]}${this.rank - 1}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + 2]}${this.rank - 1}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + 2]}${this.rank - 1}`]);
-      }
-    }
-
-
-    if (board[`${files[files.findIndex((element) => element === this.file) + 2]}${this.rank + 1}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + 2]}${this.rank + 1}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + 2]}${this.rank + 1}`]);
-      }
-    }
-
-
-    if (board[`${files[files.findIndex((element) => element === this.file) - 1]}${this.rank - 2}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) - 1]}${this.rank - 2}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) - 1]}${this.rank - 2}`]);
-      }
-    }
-
-
-    if (board[`${files[files.findIndex((element) => element === this.file) - 1]}${this.rank + 2}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) - 1]}${this.rank + 2}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) - 1]}${this.rank + 2}`]);
-      }
-    }
-
-
-    if (board[`${files[files.findIndex((element) => element === this.file) + 1]}${this.rank - 2}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + 1]}${this.rank - 2}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + 1]}${this.rank - 2}`]);
-      }
-    }
-
-
-    if (board[`${files[files.findIndex((element) => element === this.file) + 1]}${this.rank + 2}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + 1]}${this.rank + 2}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + 1]}${this.rank + 2}`]);
-      }
-    }
-    if (this.player === isInCheck) {
-      for (let square in allPossibleMoves[this.id]) {
-        if (square.id !== threateningPiece) {
-          delete allPossibleMoves[this.id][square];
-        }
+        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`]);
       }
     }
   }

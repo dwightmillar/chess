@@ -30,7 +30,7 @@ class King extends Square {
     this.checkMove(-1, 0);
 
     this.checkMove(-1, -1);
-    // console.log(allPossibleMoves[this.id]);
+
   }
 
   checkMove(horizontal, vertical) {
@@ -47,21 +47,16 @@ class King extends Square {
     if (board[position]) {
       targetPlayer = board[position].player;
       if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[position]);
-      }
-    }
-
-    if (this.player === isInCheck) {
-      for (let square in allPossibleMoves[this.id]) {
-        // console.log('able to move to: ', allPossibleMoves[this.id][square].id);
-        for (let illegalSquare in allPossibleMoves[threateningPiece]) {
-          // console.log(allPossibleMoves[this.id][square].id);
-          // console.log(allPossibleMoves[threateningPiece][illegalSquare].id);
-          if (allPossibleMoves[this.id][square].id === allPossibleMoves[threateningPiece][illegalSquare].id) {
-            delete allPossibleMoves[this.id][square];
-            console.log(allPossibleMoves[this.id]);
-            break;
+        if (this.player === isInCheck) {
+          for (let square in allPossibleMoves[this.id]) {
+            for (let illegalSquare in allPossibleMoves[threateningPiece]) {
+              if (allPossibleMoves[this.id][square].id === allPossibleMoves[threateningPiece][illegalSquare].id) {
+                break;
+              }
+            }
           }
+        } else {
+          allPossibleMoves[this.id].push(board[position]);
         }
       }
     }

@@ -14,9 +14,22 @@ class Bishop extends Square {
   updatePossibleMoves() {
     $(this.piece).click(this.move);
     allPossibleMoves[this.id] = [];
+
+    this.checkMove(-1, -1);
+
+    this.checkMove(-1, 1);
+
+    this.checkMove(1, -1);
+
+    this.checkMove(1, 1);
+
+  }
+
+  checkMove(horizontal, vertical) {
     let targetPlayer = '';
+    let horizontalSquareCount = horizontal;
+    let verticalSquareCount = vertical;
     let opponent = '';
-    let squareCount = 1;
 
     if (this.player === 'white') {
       opponent = 'black';
@@ -24,71 +37,31 @@ class Bishop extends Square {
       opponent = 'white';
     }
 
-    while (board[`${files[files.findIndex((element) => element === this.file) - squareCount]}${this.rank - squareCount}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) - squareCount]}${this.rank - squareCount}`].player;
+
+    while (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]) {
+
+      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`].player;
+
       if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) - squareCount]}${this.rank - squareCount}`]);
+        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
         if (targetPlayer === opponent) {
           break;
         }
+
       } else {
         break;
       }
-      ++squareCount;
-    }
 
-    targetPlayer = '';
-    squareCount = 1;
-
-    while (board[`${files[files.findIndex((element) => element === this.file) - squareCount]}${this.rank + squareCount}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) - squareCount]}${this.rank + squareCount}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) - squareCount]}${this.rank + squareCount}`]);
-        if (targetPlayer === opponent) {
-          break;
-        }
+      if (horizontalSquareCount < 0) {
+        --horizontalSquareCount;
       } else {
-        break;
+        ++horizontalSquareCount;
       }
-      ++squareCount;
-    }
 
-    targetPlayer = '';
-    squareCount = 1;
-
-    while (board[`${files[files.findIndex((element) => element === this.file) + squareCount]}${this.rank - squareCount}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + squareCount]}${this.rank - squareCount}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + squareCount]}${this.rank - squareCount}`]);
-        if (targetPlayer === opponent) {
-          break;
-        }
+      if (verticalSquareCount < 0) {
+        --verticalSquareCount;
       } else {
-        break;
-      }
-      ++squareCount;
-    }
-
-    targetPlayer = '';
-    squareCount = 1;
-
-    while (board[`${files[files.findIndex((element) => element === this.file) + squareCount]}${this.rank + squareCount}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + squareCount]}${this.rank + squareCount}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + squareCount]}${this.rank + squareCount}`]);
-        if (targetPlayer === opponent) {
-          break;
-        }
-      } else {
-        break;
-      }
-      ++squareCount;
-    }
-    if (this.player === isInCheck) {
-      for (let square in allPossibleMoves[this.id]) {
-        if (square.id !== threateningPiece) {
-          delete allPossibleMoves[this.id][square];
-        }
+        ++verticalSquareCount;
       }
     }
   }

@@ -14,9 +14,22 @@ class Rook extends Square {
   updatePossibleMoves() {
     $(this.piece).click(this.move);
     allPossibleMoves[this.id] = [];
+
+    this.checkMove(0, 1);
+
+    this.checkMove(0, -1);
+
+    this.checkMove(-1, 0);
+
+    this.checkMove(1, 0);
+
+  }
+
+  checkMove(horizontal, vertical) {
     let targetPlayer = '';
+    let horizontalSquareCount = horizontal;
+    let verticalSquareCount = vertical;
     let opponent = '';
-    let squareCount = 1;
 
     if (this.player === 'white') {
       opponent = 'black';
@@ -24,71 +37,31 @@ class Rook extends Square {
       opponent = 'white';
     }
 
-    while (board[`${this.file}${this.rank + squareCount}`]) {
-      targetPlayer = board[`${this.file}${this.rank + squareCount}`].player;
+
+    while (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]) {
+
+      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`].player;
+
       if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${this.file}${this.rank + squareCount}`]);
+        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
         if (targetPlayer === opponent) {
           break;
         }
+
       } else {
         break;
       }
-      ++squareCount;
-    }
 
-    targetPlayer = '';
-    squareCount = 1;
-
-    while (board[`${this.file}${this.rank - squareCount}`]) {
-      targetPlayer = board[`${this.file}${this.rank - squareCount}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${this.file}${this.rank - squareCount}`]);
-        if (targetPlayer === opponent) {
-          break;
-        }
-      } else {
-        break;
+      if (horizontalSquareCount < 0) {
+        --horizontalSquareCount;
+      } else if (horizontalSquareCount > 0) {
+        ++horizontalSquareCount;
       }
-      ++squareCount;
-    }
 
-    targetPlayer = '';
-    squareCount = 1;
-
-    while (board[`${files[files.findIndex((element) => element === this.file) - squareCount]}${this.rank}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) - squareCount]}${this.rank}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) - squareCount]}${this.rank}`]);
-        if (targetPlayer === opponent) {
-          break;
-        }
-      } else {
-        break;
-      }
-      ++squareCount;
-    }
-
-    targetPlayer = '';
-    squareCount = 1;
-
-    while (board[`${files[files.findIndex((element) => element === this.file) + squareCount]}${this.rank}`]) {
-      targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + squareCount]}${this.rank}`].player;
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + squareCount]}${this.rank}`]);
-        if (targetPlayer === opponent) {
-          break;
-        }
-      } else {
-        break;
-      }
-      ++squareCount;
-    }
-    if (this.player === isInCheck) {
-      for (let square in allPossibleMoves[this.id]) {
-        if (square.id !== threateningPiece) {
-          delete allPossibleMoves[this.id][square];
-        }
+      if (verticalSquareCount < 0) {
+        --verticalSquareCount;
+      } else if (verticalSquareCount > 0) {
+        ++verticalSquareCount;
       }
     }
   }
