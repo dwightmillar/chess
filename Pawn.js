@@ -76,8 +76,15 @@ class Pawn extends Square {
         let rankLimit = null;
         let rankIndex = null;
         let fileOffset = 0;
-        parseInt(threateningPiece[1]) > parseInt(king[1]) ? rankLimit = parseInt(threateningPiece[1]) : rankLimit = parseInt(king[1]);
-        parseInt(threateningPiece[1]) < parseInt(king[1]) ? rankIndex = parseInt(threateningPiece[1]) : rankIndex = parseInt(king[1]);
+
+        parseInt(threateningPiece[1]) > parseInt(king[1]) ?
+          rankLimit = parseInt(threateningPiece[1]) :
+          rankLimit = parseInt(king[1]);
+
+        parseInt(threateningPiece[1]) < parseInt(king[1]) ?
+          rankIndex = parseInt(threateningPiece[1]) :
+          rankIndex = parseInt(king[1]);
+
         for (rankIndex; rankIndex < rankLimit; rankIndex++) {
           let fileLimit = null;
           let fileIndex = null;
@@ -88,11 +95,29 @@ class Pawn extends Square {
         }
 
       }
-      // else if (board[threateningPiece] instanceof Rook) {
+      else if (board[threateningPiece] instanceof Rook) {
+        let rankLimit = null;
+        let rankIndex = null;
 
-      // } else if (board[threateningPiece] instanceof Queen) {
+        parseInt(threateningPiece[1]) > parseInt(king[1]) ?
+          rankLimit = parseInt(threateningPiece[1]) :
+          rankLimit = parseInt(king[1]);
 
-      // }
+        parseInt(threateningPiece[1]) < parseInt(king[1]) ?
+          rankIndex = parseInt(threateningPiece[1]) :
+          rankIndex = parseInt(king[1]);
+
+        for (rankIndex; rankIndex < rankLimit; rankIndex++) {
+          let fileLimit = null;
+          let fileIndex = null;
+          files.findIndex((element) => element === threateningPiece[0]) > files.findIndex((element) => element === king[0]) ? fileLimit = files.findIndex((element) => element === threateningPiece[0]) : fileLimit = files.findIndex((element) => element === king[0]);
+          files.findIndex((element) => element === threateningPiece[0]) < files.findIndex((element) => element === king[0]) ? fileIndex = files.findIndex((element) => element === threateningPiece[0]) : fileIndex = files.findIndex((element) => element === king[0]);
+          blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
+        }
+
+      } else if (board[threateningPiece] instanceof Queen) {
+
+      }
       // console.log(blockingMoves);
 
       if (leftDiagonalSquare.id === threateningPiece) {
