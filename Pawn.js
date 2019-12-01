@@ -12,10 +12,10 @@ class Pawn extends Square {
 
   updatePossibleMoves() {
     $(this.piece).click(this.move);
-    var oneSquareForward = { square: null };
-    var twoSquaresForward = { square: null };
-    var leftDiagonalSquare = { square: null };
-    var rightDiagonalSquare = { square: null };
+    var oneSquareForward = '';
+    var twoSquaresForward = '';
+    var leftDiagonalSquare = '';
+    var rightDiagonalSquare = '';
     allPossibleMoves[this.id] = [];
 
 
@@ -43,6 +43,8 @@ class Pawn extends Square {
     if (!rightDiagonalSquare)
       rightDiagonalSquare = '';
 
+
+
     if (isInCheck !== this.player) {
       if (!oneSquareForward.piece) {
         allPossibleMoves[this.id].push(oneSquareForward);
@@ -59,8 +61,19 @@ class Pawn extends Square {
       }
     } else {
 
-      let king = null;
       let blockingMoves = [];
+
+      let king = null;
+
+      let rankLimit = null;
+      let rankIndex = null;
+
+      let fileLimit = null;
+      let fileIndex = null;
+
+      let fileOffset = null;
+
+// KING DEFINITON
 
       for (let move in allPossibleMoves[threateningPiece]) {
         if (allPossibleMoves[threateningPiece][move] instanceof King) {
@@ -69,56 +82,76 @@ class Pawn extends Square {
         }
       }
 
-      // console.log('King: ',king);
-      // console.log('threateningPiece: ',threateningPiece);
+// RANKLIMIT/RANKINDEX DEFINITON
 
-      if (board[threateningPiece] instanceof Bishop) {
-        let rankLimit = null;
-        let rankIndex = null;
-        let fileOffset = 0;
+      parseInt(threateningPiece[1]) > parseInt(king[1]) ?
+        rankLimit = parseInt(threateningPiece[1]) :
+        rankLimit = parseInt(king[1]);
 
-        parseInt(threateningPiece[1]) > parseInt(king[1]) ?
-          rankLimit = parseInt(threateningPiece[1]) :
-          rankLimit = parseInt(king[1]);
+      parseInt(threateningPiece[1]) < parseInt(king[1]) ?
+        rankIndex = parseInt(threateningPiece[1]) :
+        rankIndex = parseInt(king[1]);
 
-        parseInt(threateningPiece[1]) < parseInt(king[1]) ?
-          rankIndex = parseInt(threateningPiece[1]) :
-          rankIndex = parseInt(king[1]);
+// FILELIMIT/FILEINDEX DEFINITION
 
-        for (rankIndex; rankIndex < rankLimit; rankIndex++) {
-          let fileLimit = null;
-          let fileIndex = null;
-          files.findIndex((element) => element === threateningPiece[0]) > files.findIndex((element) => element ===king[0]) ? fileLimit = files.findIndex((element) => element === threateningPiece[0]) : fileLimit = files.findIndex((element) => element ===king[0]);
-          files.findIndex((element) => element === threateningPiece[0]) < files.findIndex((element) => element ===king[0]) ? fileIndex = files.findIndex((element) => element === threateningPiece[0]) : fileIndex = files.findIndex((element) => element ===king[0]);
-          blockingMoves.push(`${files[fileIndex + fileOffset]}${rankIndex}`);
-          ++fileOffset;
+      files.findIndex((element) => element === threateningPiece[0]) > files.findIndex((element) => element === king[0]) ?
+        fileLimit = files.findIndex((element) => element === threateningPiece[0]) :
+        fileLimit = files.findIndex((element) => element === king[0]);
+
+      files.findIndex((element) => element === threateningPiece[0]) < files.findIndex((element) => element === king[0]) ?
+        fileIndex = files.findIndex((element) => element === threateningPiece[0]) :
+        fileIndex = files.findIndex((element) => element === king[0]);
+
+// BLOCKINGMOVES DEFINITION
+
+      switch(board[threateningPiece].constructor.name) {
+        case 'Rook': {
+
+          if (rankIndex === rankLimit) {
+            for (fileIndex; fileIndex < fileLimit; fileIndex++) {
+              blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
+            }
+          } else {
+            for (rankIndex; rankIndex < rankLimit; rankIndex++) {
+              blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
+            }
+          }
+
+        } break;
+        case 'Bishop': {
+          fileOffset = 0;
+
+          for (rankIndex; rankIndex < rankLimit; rankIndex++) {
+            blockingMoves.push(`${files[fileIndex + fileOffset]}${rankIndex}`);
+            ++fileOffset;
+          }
+
+        } break;
+        case 'Queen': {
+          fileOffset = 0;
+
+          if (rankIndex === rankLimit) {
+            for (fileIndex; fileIndex < fileLimit; fileIndex++) {
+              blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
+            }
+          }
+
+          else if (fileIndex === fileLimit) {
+            for (rankIndex; rankIndex < rankLimit; rankIndex++) {
+              blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
+            }
+          }
+
+          else {
+            for (rankIndex; rankIndex < rankLimit; rankIndex++) {
+              blockingMoves.push(`${files[fileIndex + fileOffset]}${rankIndex}`);
+              ++fileOffset;
+            }
+          }
         }
-
       }
-      else if (board[threateningPiece] instanceof Rook) {
-        let rankLimit = null;
-        let rankIndex = null;
 
-        parseInt(threateningPiece[1]) > parseInt(king[1]) ?
-          rankLimit = parseInt(threateningPiece[1]) :
-          rankLimit = parseInt(king[1]);
 
-        parseInt(threateningPiece[1]) < parseInt(king[1]) ?
-          rankIndex = parseInt(threateningPiece[1]) :
-          rankIndex = parseInt(king[1]);
-
-        for (rankIndex; rankIndex < rankLimit; rankIndex++) {
-          let fileLimit = null;
-          let fileIndex = null;
-          files.findIndex((element) => element === threateningPiece[0]) > files.findIndex((element) => element === king[0]) ? fileLimit = files.findIndex((element) => element === threateningPiece[0]) : fileLimit = files.findIndex((element) => element === king[0]);
-          files.findIndex((element) => element === threateningPiece[0]) < files.findIndex((element) => element === king[0]) ? fileIndex = files.findIndex((element) => element === threateningPiece[0]) : fileIndex = files.findIndex((element) => element === king[0]);
-          blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
-        }
-
-      } else if (board[threateningPiece] instanceof Queen) {
-
-      }
-      // console.log(blockingMoves);
 
       if (leftDiagonalSquare.id === threateningPiece) {
         allPossibleMoves[this.id].push(leftDiagonalSquare);
@@ -127,23 +160,12 @@ class Pawn extends Square {
         allPossibleMoves[this.id].push(rightDiagonalSquare);
       }
 
-      // console.log(oneSquareForward.id);
-      // console.log(blockingMoves.findIndex((element) => element === oneSquareForward.id));
-      if (!oneSquareForward.piece) {
-        if (blockingMoves.findIndex((element) => element === oneSquareForward.id) > 0) {
-          allPossibleMoves[this.id].push(oneSquareForward);
-          if (!twoSquaresForward.piece && !this.hasMoved) {
-            if (blockingMoves.findIndex((element) => element === twoSquaresForward.id) > 0) {
-              console.log(blockingMoves.findIndex((element) => element === twoSquaresForward.id));
-              allPossibleMoves[this.id].push(twoSquaresForward);
-            }
-          }
+      if (!oneSquareForward.piece && blockingMoves.findIndex((element) => element === oneSquareForward.id) > 0) {
+        allPossibleMoves[this.id].push(oneSquareForward);
+        if (!this.hasMoved && !twoSquaresForward.piece && blockingMoves.findIndex((element) => element === twoSquaresForward.id) > 0) {
+          allPossibleMoves[this.id].push(twoSquaresForward);
         }
-
       }
-
-      // console.log(allPossibleMoves[this.id]);
-
     }
   }
 }
