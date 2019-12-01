@@ -164,8 +164,8 @@ class Bishop extends Square {
       if (blockingMoves.findIndex((element) => element === board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`].id) > 0) {
         allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
       }
-      if (board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`].id === threateningPiece) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`]);
+      if (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`].id === threateningPiece) {
+        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
       }
       if (targetPlayer === opponent) {
         break;

@@ -35,6 +35,7 @@ class Knight extends Square {
   checkMove(horizontal, vertical) {
     let targetPlayer = '';
     let opponent = '';
+    let position = `${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`;
 
     if (this.player === 'white') {
       opponent = 'black';
@@ -43,10 +44,10 @@ class Knight extends Square {
     }
 
     if (isInCheck !== this.player) {
-      if (board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`]) {
-        targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`].player;
+      if (board[position]) {
+        targetPlayer = board[position].player;
         if (!targetPlayer || targetPlayer === opponent) {
-          allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`]);
+          allPossibleMoves[this.id].push(board[position]);
         }
       }
     } else {
@@ -141,14 +142,14 @@ class Knight extends Square {
         }
       }
 
-      if (board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`]) {
-        targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`].player;
+      if (board[position]) {
+        targetPlayer = board[position].player;
         if (!targetPlayer || targetPlayer === opponent) {
-          if (blockingMoves.findIndex((element) => element === board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`].id) > 0) {
-            allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`]);
+          if (blockingMoves.findIndex((element) => element === board[position].id) > 0) {
+            allPossibleMoves[this.id].push(board[position]);
           }
-          if (board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`].id === threateningPiece){
-            allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`]);
+          if (board[position].id === threateningPiece){
+            allPossibleMoves[this.id].push(board[position]);
           }
         }
       }

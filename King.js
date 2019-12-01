@@ -38,6 +38,7 @@ class King extends Square {
     let targetPlayer = '';
     let opponent = '';
     let position = `${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`;
+    let canMove = true;
 
     if (this.player === 'white') {
       opponent = 'black';
@@ -45,34 +46,36 @@ class King extends Square {
       opponent = 'white';
     }
 
-    if (board[position]) {
-      targetPlayer = board[position].player;
-      if(this.player === 'black') {
-        // console.log(targetPlayer);
-        // console.log(opponent);
+    if (isInCheck !== this.player) {
+      if (board[position]) {
+        targetPlayer = board[position].player;
+        if (!targetPlayer || targetPlayer === opponent) {
+          allPossibleMoves[this.id].push(board[position]);
+        }
       }
-
-      if (!targetPlayer || targetPlayer === opponent) {
-
-        if (this.player === isInCheck) {
-          let canMove = true;
-
-          for (let illegalSquare in allPossibleMoves[threateningPiece]) {
-            if (board[position].id === allPossibleMoves[threateningPiece][illegalSquare].id) {
-              canMove = false;
-              break;
+    } else {
+      if (board[position]) {
+        targetPlayer = board[position].player;
+        if (!targetPlayer || targetPlayer === opponent) {
+          for (let piece in board) {
+            if (board[piece].player === opponent) {
+              if(board[piece].id === 'h4' && position === 'g5'){
+                debugger;
+              }
+              if (allPossibleMoves[board[piece].id].findIndex((element) => element.id === position) !== -1) {
+                console.log('cannot move', board[piece].id);
+                canMove = false;
+              }
             }
           }
-
-          if (!canMove) {
-            return null;
-          } else {
+          if (canMove) {
+            console.log(board[position]);
             allPossibleMoves[this.id].push(board[position]);
           }
 
-
-        } else {
-          allPossibleMoves[this.id].push(board[position]);
+          if (board[position].id === threateningPiece) {
+            allPossibleMoves[this.id].push(board[position]);
+          }
         }
       }
     }
