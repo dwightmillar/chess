@@ -30,12 +30,24 @@ class Square {
 
       possibleMoves = allPossibleMoves[this.id];
 
-      if (possibleMoves[0]) {
-        for (let move in possibleMoves) {
-          possibleMoves[move].div[0].style.backgroundColor = 'cyan';
-          $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
+      if (activePiece instanceof Pawn) {
+        if (possibleMoves[0]) {
+          for (let move in possibleMoves) {
+            if (possibleMoves[move].file === activePiece.file || (possibleMoves[move].player && possibleMoves[move].player !== this.player)) {
+              possibleMoves[move].div[0].style.backgroundColor = 'cyan';
+              $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
+            }
+          }
+        }
+      } else {
+        if (possibleMoves[0]) {
+          for (let move in possibleMoves) {
+            possibleMoves[move].div[0].style.backgroundColor = 'cyan';
+            $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
+          }
         }
       }
+
     } else if (activePiece === this) {
       activePiece.div[0].style.backgroundColor = activePiece.color;
 

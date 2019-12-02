@@ -53,10 +53,10 @@ class Pawn extends Square {
         }
       }
 
-      if (leftDiagonalSquare.player && leftDiagonalSquare.player !== this.player) {
+      if (leftDiagonalSquare && leftDiagonalSquare.player !== this.player) {
         allPossibleMoves[this.id].push(leftDiagonalSquare);
       }
-      if (rightDiagonalSquare.player && rightDiagonalSquare.player !== this.player) {
+      if (rightDiagonalSquare && rightDiagonalSquare.player !== this.player) {
         allPossibleMoves[this.id].push(rightDiagonalSquare);
       }
     } else {
