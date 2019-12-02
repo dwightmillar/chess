@@ -47,16 +47,27 @@ class King extends Square {
     }
 
     if (board[position]) {
+
       targetPlayer = board[position].player;
+
       if (!targetPlayer || targetPlayer === opponent) {
+
         for (let piece in board) {
           if (allPossibleMoves[board[piece].id] && board[piece].player === opponent) {
+            if (board[piece] instanceof Pawn) {
+              console.log(board[piece].id);
+              allPossibleMoves[board[piece].id].findIndex((element) => {
+                if (element.file === board[piece].file && element.id === position) {
+                  allPossibleMoves[this.id].push(board[position]);
+                }
+              });
+            }
             if (allPossibleMoves[board[piece].id].findIndex((element) => element.id === position) !== -1) {
-              console.log('cannot move', board[piece].id);
               canMove = false;
             }
           }
         }
+
         if (canMove) {
           console.log(board[position]);
           allPossibleMoves[this.id].push(board[position]);
