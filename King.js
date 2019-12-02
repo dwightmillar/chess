@@ -59,9 +59,6 @@ class King extends Square {
         if (!targetPlayer || targetPlayer === opponent) {
           for (let piece in board) {
             if (board[piece].player === opponent) {
-              if(board[piece].id === 'h4' && position === 'g5'){
-                debugger;
-              }
               if (allPossibleMoves[board[piece].id].findIndex((element) => element.id === position) !== -1) {
                 console.log('cannot move', board[piece].id);
                 canMove = false;
