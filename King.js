@@ -55,7 +55,6 @@ class King extends Square {
         for (let piece in board) {
           if (allPossibleMoves[board[piece].id] && board[piece].player === opponent) {
             if (board[piece] instanceof Pawn) {
-              console.log(board[piece].id);
               allPossibleMoves[board[piece].id].findIndex((element) => {
                 if (element.file === board[piece].file && element.id === position) {
                   allPossibleMoves[this.id].push(board[position]);
@@ -69,7 +68,6 @@ class King extends Square {
         }
 
         if (canMove) {
-          console.log(board[position]);
           allPossibleMoves[this.id].push(board[position]);
         }
 
