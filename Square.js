@@ -12,6 +12,7 @@ class Square {
                   style: `background-color: ${this.color};`
                   });
     this.move = this.move.bind(this);
+    allPossibleMoves[this.id] = [];
 
     return this
   }
@@ -110,8 +111,6 @@ class Square {
       for (let space in Object.values(allPossibleMoves[piece])) {
         if (Object.values(allPossibleMoves[piece])[space] instanceof King && Object.values(allPossibleMoves[piece])[space].player !== this.player) {
           isInCheck = Object.values(allPossibleMoves[piece])[space].player;
-          console.log('this.player: ',this.player);
-          console.log('board[piece]: ',board[piece]);
           threateningPiece = piece;
           console.log(`${playerTurn}`[0].toUpperCase() + `${playerTurn.slice(1)} is put in check by ${board[piece].piece[0].classList[1]}[${piece[0].toUpperCase() + piece[1]}]`);
           loadBoard(board);
