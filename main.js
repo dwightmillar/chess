@@ -22,10 +22,20 @@
     for (let squareIndex in boardData) {
       let Square = boardData[squareIndex];
       squares.push(Square);
-      if (!Square.updatePossibleMoves) {
+      if (!Square.updatePossibleMoves || Square instanceof King) {
         continue;
       }
       Square.updatePossibleMoves();
+    }
+
+    for (let squareIndex in boardData) {
+      let Square = boardData[squareIndex];
+      if (!Square.updatePossibleMoves) {
+        continue;
+      }
+      if (Square instanceof King) {
+        Square.updatePossibleMoves();
+      }
     }
 
 
