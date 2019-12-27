@@ -61,9 +61,16 @@ class King extends Square {
     for (let piece in board) {
       if (board[piece].player === opponent) {
         if (board[piece] instanceof Pawn) {
+          // if (this.id === "h5" && position === "g5") {
+          //   debugger;
+          // }
+
+          // if the position of the square to be moved to is a possible move of a Pawn,
           if (allPossibleMoves[piece].findIndex(element => element.id === position) !== -1) {
-            if (allPossibleMoves[piece].findIndex(element => element.file === position[0]) === -1) {
-              allPossibleMoves[this.id].push(board[position]);
+            // and if the file of the square to be moved to is the same as the file of the Pawn,
+            if (allPossibleMoves[piece].findIndex(element => element.file === piece[0]) === -1) {
+              //then make it a valid move
+              return;
             }
           }
         } else {

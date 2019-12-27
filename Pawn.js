@@ -167,5 +167,6 @@ class Pawn extends Square {
         }
       }
     }
+    if (this.id === 'h4') console.log('possible moves: ',allPossibleMoves[this.id]);
   }
 }
