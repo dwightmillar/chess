@@ -107,9 +107,21 @@ class Square {
       possibleMoves[move].div[0].style.backgroundColor = possibleMoves[move].color;
     }
 
+    // for (let piece in allPossibleMoves) {
+    //   allPossibleMoves[piece].forEach((square) => {
+    //     if (square instanceof King && square.player !== this.player) {
+    //       isInCheck = piece.player;
+    //       threateningPiece = piece;
+    //       console.log(`${playerTurn}`[0].toUpperCase() + `${playerTurn.slice(1)} is put in check by ${board[piece].piece[0].classList[1]}[${piece[0].toUpperCase() + piece[1]}]`);
+    //       loadBoard(board);
+
+    //     }
+    //   })
+    // }
+
     for (let piece in allPossibleMoves) {
       for (let space in Object.values(allPossibleMoves[piece])) {
-        if (Object.values(allPossibleMoves[piece])[space] instanceof King && Object.values(allPossibleMoves[piece])[space].player !== this.player) {
+        if (Object.values(allPossibleMoves[piece])[space] instanceof King && Object.values(allPossibleMoves[piece])[space].player !== board[piece].player) {
           isInCheck = Object.values(allPossibleMoves[piece])[space].player;
           threateningPiece = piece;
           console.log(`${playerTurn}`[0].toUpperCase() + `${playerTurn.slice(1)} is put in check by ${board[piece].piece[0].classList[1]}[${piece[0].toUpperCase() + piece[1]}]`);

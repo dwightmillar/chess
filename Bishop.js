@@ -14,6 +14,7 @@ class Bishop extends Square {
   updatePossibleMoves() {
     $(this.piece).click(this.move);
     allPossibleMoves[this.id] = [];
+    allPotentialMoves[this.id] = [];
 
     this.checkMove(-1, -1);
 
@@ -30,6 +31,7 @@ class Bishop extends Square {
     let horizontalSquareCount = horizontal;
     let verticalSquareCount = vertical;
     let opponent = '';
+    let checkPotentialMoves = false;
 
     if (this.player === 'white') {
       opponent = 'black';
@@ -37,11 +39,40 @@ class Bishop extends Square {
       opponent = 'white';
     }
 
+  //if the player is not in check
   if(isInCheck !== this.player) {
+    //while the position to be checked exists
     while (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]) {
 
       targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`].player;
 
+      if (checkPotentialMoves === false) {
+        //if the square is not occupied by the same player
+        if (targetPlayer !== this.player) {
+          //make the square a valid move
+          allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+          // if the square is occupied by an opposing piece, stop checking
+          if (targetPlayer) {
+            checkPotentialMoves = true;
+          }
+
+        } else {
+          checkPotentialMoves = true;
+        }
+      } else {
+        //if the square is not occupied by the same player
+        if (targetPlayer !== this.player) {
+          //make the square a valid move
+          allPotentialMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+          //if the square is occupied by an opposing piece, stop checking
+          if (targetPlayer) {
+            break;
+          }
+
+        } else {
+          break;
+        }
+      }
       if (!targetPlayer || targetPlayer === opponent) {
         allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
         if (targetPlayer === opponent) {

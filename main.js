@@ -39,6 +39,8 @@
       }
     }
 
+    console.log('allPotentialMoves: ',allPotentialMoves);
+
 
     for (let rankIndex = 0; rankIndex < 8; rankIndex++) {
       rank = $("<div/>", { class: 'file' })
