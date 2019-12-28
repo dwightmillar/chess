@@ -73,15 +73,6 @@ class Bishop extends Square {
           break;
         }
       }
-      if (!targetPlayer || targetPlayer === opponent) {
-        allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
-        if (targetPlayer === opponent) {
-          break;
-        }
-
-      } else {
-        break;
-      }
 
       if (horizontalSquareCount < 0) {
         --horizontalSquareCount;
