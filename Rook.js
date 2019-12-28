@@ -14,6 +14,7 @@ class Rook extends Square {
   updatePossibleMoves() {
     $(this.piece).click(this.move);
     allPossibleMoves[this.id] = [];
+    allPotentialMoves[this.id] = [];
 
     this.checkMove(0, 1);
 
@@ -37,14 +38,19 @@ class Rook extends Square {
       opponent = 'white';
     }
 
+    //if the player is not in check
     if (isInCheck !== this.player) {
+      //while the position to be checked exists
       while (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]) {
 
         targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`].player;
 
-        if (!targetPlayer || targetPlayer === opponent) {
+        //if the square is not occupied by the same player
+        if (targetPlayer !== this.player) {
+          //make the square a valid move
           allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
-          if (targetPlayer === opponent) {
+          //if the square is occupied by an opposing piece, stop checking
+          if (targetPlayer) {
             break;
           }
 
@@ -188,5 +194,6 @@ class Rook extends Square {
         }
       }
     }
+
   }
 }
