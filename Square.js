@@ -43,8 +43,10 @@ class Square {
       } else {
         if (possibleMoves[0]) {
           for (let move in possibleMoves) {
-            possibleMoves[move].div[0].style.backgroundColor = 'cyan';
-            $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
+            if (possibleMoves[move].player !== this.player) {
+              possibleMoves[move].div[0].style.backgroundColor = 'cyan';
+              $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
+            }
           }
         }
       }
@@ -107,18 +109,6 @@ class Square {
       possibleMoves[move].div[0].style.backgroundColor = possibleMoves[move].color;
     }
 
-    // for (let piece in allPossibleMoves) {
-    //   allPossibleMoves[piece].forEach((square) => {
-    //     if (square instanceof King && square.player !== this.player) {
-    //       isInCheck = piece.player;
-    //       threateningPiece = piece;
-    //       console.log(`${playerTurn}`[0].toUpperCase() + `${playerTurn.slice(1)} is put in check by ${board[piece].piece[0].classList[1]}[${piece[0].toUpperCase() + piece[1]}]`);
-    //       loadBoard(board);
-
-    //     }
-    //   })
-    // }
-
     for (let piece in allPossibleMoves) {
       for (let space in Object.values(allPossibleMoves[piece])) {
         if (Object.values(allPossibleMoves[piece])[space] instanceof King && Object.values(allPossibleMoves[piece])[space].player !== board[piece].player) {
@@ -127,6 +117,19 @@ class Square {
           console.log(`${playerTurn}`[0].toUpperCase() + `${playerTurn.slice(1)} is put in check by ${board[piece].piece[0].classList[1]}[${piece[0].toUpperCase() + piece[1]}]`);
           loadBoard(board);
         }
+      }
+    }
+
+    if (isInCheck) {
+      let moveCounter = 0;
+      for (let square in board) {
+        if (board[square].player === isInCheck) {
+          moveCounter += allPossibleMoves[square].length;
+        }
+      }
+      if (moveCounter === 0) {
+        console.log('Checkmate!');
+        playerTurn = null;
       }
     }
 

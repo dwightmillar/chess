@@ -60,10 +60,12 @@ class Queen extends Square {
             allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
             //if the square is occupied by an opposing piece, stop checking
             if (targetPlayer) {
+              allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
               checkPotentialMoves = true;
             }
 
           } else {
+            allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
             checkPotentialMoves = true;
           }
         } else {
