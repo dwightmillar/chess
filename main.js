@@ -7,7 +7,7 @@
   const pieces = ['Rook', 'Knight', 'Bishop', 'Queen', 'King', 'Bishop', 'Knight', 'Rook'];
   let playerTurn = 'white';
   let isInCheck = '';
-  let threateningPiece = '';
+  let threateningPieces = [];
 
 
   let board = new Board();

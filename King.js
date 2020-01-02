@@ -150,12 +150,14 @@ class King extends Square {
             if (allPossibleMoves[piece].findIndex(element => element.id === position) !== -1) {
               canMove = false;
             }
-            //if in check the position to be moved to is a potential move of an opposing piece, you can't move there
-            if (allPotentialMoves[threateningPiece]) {
-              if (allPotentialMoves[threateningPiece].findIndex(element => element.id === position) !== -1) {
-                canMove = false;
+            threateningPieces.forEach(threateningPiece => {
+              //if in check the position to be moved to is a potential move of an opposing piece, you can't move there
+              if (allPotentialMoves[threateningPiece]) {
+                if (allPotentialMoves[threateningPiece].findIndex(element => element.id === position) !== -1) {
+                  canMove = false;
+                }
               }
-            }
+            })
           }
         }
       }

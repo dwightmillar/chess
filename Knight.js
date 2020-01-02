@@ -73,87 +73,88 @@ class Knight extends Square {
         }
       }
 
-      // RANKLIMIT/RANKINDEX DEFINITON
+      threateningPieces.forEach(threateningPiece => {
+        // RANKLIMIT/RANKINDEX DEFINITON
 
-      parseInt(threateningPiece[1]) > parseInt(king[1]) ?
-        rankLimit = parseInt(threateningPiece[1]) :
-        rankLimit = parseInt(king[1]);
+        parseInt(threateningPiece[1]) > parseInt(king[1]) ?
+          rankLimit = parseInt(threateningPiece[1]) :
+          rankLimit = parseInt(king[1]);
 
-      parseInt(threateningPiece[1]) < parseInt(king[1]) ?
-        rankIndex = parseInt(threateningPiece[1]) :
-        rankIndex = parseInt(king[1]);
+        parseInt(threateningPiece[1]) < parseInt(king[1]) ?
+          rankIndex = parseInt(threateningPiece[1]) :
+          rankIndex = parseInt(king[1]);
 
-      // FILELIMIT/FILEINDEX DEFINITION
+        // FILELIMIT/FILEINDEX DEFINITION
 
-      files.findIndex((element) => element === threateningPiece[0]) > files.findIndex((element) => element === king[0]) ?
-        fileLimit = files.findIndex((element) => element === threateningPiece[0]) :
-        fileLimit = files.findIndex((element) => element === king[0]);
+        files.findIndex((element) => element === threateningPiece[0]) > files.findIndex((element) => element === king[0]) ?
+          fileLimit = files.findIndex((element) => element === threateningPiece[0]) :
+          fileLimit = files.findIndex((element) => element === king[0]);
 
-      files.findIndex((element) => element === threateningPiece[0]) < files.findIndex((element) => element === king[0]) ?
-        fileIndex = files.findIndex((element) => element === threateningPiece[0]) :
-        fileIndex = files.findIndex((element) => element === king[0]);
+        files.findIndex((element) => element === threateningPiece[0]) < files.findIndex((element) => element === king[0]) ?
+          fileIndex = files.findIndex((element) => element === threateningPiece[0]) :
+          fileIndex = files.findIndex((element) => element === king[0]);
 
-      // BLOCKINGMOVES DEFINITION
+        // BLOCKINGMOVES DEFINITION
 
-      switch (board[threateningPiece].constructor.name) {
-        case 'Rook': {
+        switch (board[threateningPiece].constructor.name) {
+          case 'Rook': {
 
-          if (rankIndex === rankLimit) {
-            for (fileIndex; fileIndex < fileLimit; fileIndex++) {
-              blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
+            if (rankIndex === rankLimit) {
+              for (fileIndex; fileIndex < fileLimit; fileIndex++) {
+                blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
+              }
+            } else {
+              for (rankIndex; rankIndex < rankLimit; rankIndex++) {
+                blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
+              }
             }
-          } else {
-            for (rankIndex; rankIndex < rankLimit; rankIndex++) {
-              blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
-            }
-          }
 
-        } break;
-        case 'Bishop': {
-          fileOffset = 0;
+          } break;
+          case 'Bishop': {
+            fileOffset = 0;
 
-          for (rankIndex; rankIndex < rankLimit; rankIndex++) {
-            blockingMoves.push(`${files[fileIndex + fileOffset]}${rankIndex}`);
-            ++fileOffset;
-          }
-
-        } break;
-        case 'Queen': {
-          fileOffset = 0;
-
-          if (rankIndex === rankLimit) {
-            for (fileIndex; fileIndex < fileLimit; fileIndex++) {
-              blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
-            }
-          }
-
-          else if (fileIndex === fileLimit) {
-            for (rankIndex; rankIndex < rankLimit; rankIndex++) {
-              blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
-            }
-          }
-
-          else {
             for (rankIndex; rankIndex < rankLimit; rankIndex++) {
               blockingMoves.push(`${files[fileIndex + fileOffset]}${rankIndex}`);
               ++fileOffset;
             }
-          }
-        }
-      }
 
-      if (board[position]) {
-        targetPlayer = board[position].player;
-        if (!targetPlayer || targetPlayer === opponent) {
-          if (blockingMoves.findIndex((element) => element === board[position].id) > 0) {
-            allPossibleMoves[this.id].push(board[position]);
-          }
-          if (board[position].id === threateningPiece){
-            allPossibleMoves[this.id].push(board[position]);
+          } break;
+          case 'Queen': {
+            fileOffset = 0;
+
+            if (rankIndex === rankLimit) {
+              for (fileIndex; fileIndex < fileLimit; fileIndex++) {
+                blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
+              }
+            }
+
+            else if (fileIndex === fileLimit) {
+              for (rankIndex; rankIndex < rankLimit; rankIndex++) {
+                blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
+              }
+            }
+
+            else {
+              for (rankIndex; rankIndex < rankLimit; rankIndex++) {
+                blockingMoves.push(`${files[fileIndex + fileOffset]}${rankIndex}`);
+                ++fileOffset;
+              }
+            }
           }
         }
-      }
+
+        if (board[position]) {
+          targetPlayer = board[position].player;
+          if (!targetPlayer || targetPlayer === opponent) {
+            if (blockingMoves.findIndex((element) => element === board[position].id) > 0) {
+              allPossibleMoves[this.id].push(board[position]);
+            }
+            if (board[position].id === threateningPiece) {
+              allPossibleMoves[this.id].push(board[position]);
+            }
+          }
+        }
+      })
     }
-
   }
 }

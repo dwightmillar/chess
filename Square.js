@@ -101,7 +101,7 @@ class Square {
     }
 
     isInCheck = '';
-    threateningPiece = '';
+    threateningPieces = [];
 
     loadBoard(board);
 
@@ -113,7 +113,7 @@ class Square {
       for (let space in Object.values(allPossibleMoves[piece])) {
         if (Object.values(allPossibleMoves[piece])[space] instanceof King && Object.values(allPossibleMoves[piece])[space].player !== board[piece].player) {
           isInCheck = Object.values(allPossibleMoves[piece])[space].player;
-          threateningPiece = piece;
+          threateningPieces.push(piece);
           console.log(`${playerTurn}`[0].toUpperCase() + `${playerTurn.slice(1)} is put in check by ${board[piece].piece[0].classList[1]}[${piece[0].toUpperCase() + piece[1]}]`);
           loadBoard(board);
         }
