@@ -71,6 +71,7 @@ class Square {
       return;
     }
     var target = board[possibleMoves[move].id];
+    let king = null;
 
     board[activePiece.id] = new Square(activePiece.file, activePiece.rank, '', activePiece.color);
     switch (activePiece.piece[0].classList[1]) {
@@ -102,6 +103,7 @@ class Square {
 
     isInCheck = '';
     threateningPieces = [];
+    blockingPieces = {};
 
     loadBoard(board);
 
@@ -117,6 +119,47 @@ class Square {
           console.log(`${playerTurn}`[0].toUpperCase() + `${playerTurn.slice(1)} is put in check by ${board[piece].piece[0].classList[1]}[${piece[0].toUpperCase() + piece[1]}]`);
           loadBoard(board);
         }
+      }
+    }
+
+    // KING DEFINITON
+
+    for (let piece in board) {
+      if (board[piece] instanceof King && board[piece].player !== this.player) {
+        king = piece;
+        break;
+      }
+    }
+
+    for (let piece in blockingPieces) {
+      if (blockingPieces[piece].length > 0) {
+        blockingPieces[piece].forEach(square => {
+          debugger;
+          switch (board[piece].constructor) {
+            case Rook: {
+              for (let move in allPossibleMoves[square.id]) {
+                if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) && (allPossibleMoves[square.id][move].file === king.file || allPossibleMoves[square.id][move].rank === king.rank)) {
+                  break;
+                } else {
+                  delete allPossibleMoves[square.id][move];
+                }
+              }
+            }
+            break;
+            case Bishop: {
+              for (let move in allPossibleMoves[square.id]) {
+                console.log(allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]));
+              }
+            }
+            break;
+            case Queen: {
+              for (let move in allPossibleMoves[square.id]) {
+                console.log(allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]));
+              }
+            }
+            break;
+          }
+        });
       }
     }
 

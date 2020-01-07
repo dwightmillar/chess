@@ -8,6 +8,7 @@
   let playerTurn = 'white';
   let isInCheck = '';
   let threateningPieces = [];
+  let blockingPieces = {};
 
 
   let board = new Board();

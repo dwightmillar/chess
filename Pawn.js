@@ -107,6 +107,7 @@ class Pawn extends Square {
 
         switch (board[threateningPiece].constructor.name) {
           case 'Rook': {
+            debugger;
 
             if (rankIndex === rankLimit) {
               for (fileIndex; fileIndex < fileLimit; fileIndex++) {
