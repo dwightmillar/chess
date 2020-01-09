@@ -103,7 +103,7 @@ class Square {
 
     isInCheck = '';
     threateningPieces = [];
-    blockingPieces = {};
+    // blockingPieces = {};
 
     loadBoard(board);
 
@@ -134,7 +134,6 @@ class Square {
     for (let piece in blockingPieces) {
       if (blockingPieces[piece].length > 0) {
         blockingPieces[piece].forEach(square => {
-          debugger;
           switch (board[piece].constructor) {
             case Rook: {
               for (let move in allPossibleMoves[square.id]) {

@@ -25,8 +25,6 @@ class Rook extends Square {
 
     this.checkMove(1, 0);
 
-    // console.log('blockingPieces:', blockingPieces[this.id]);
-
   }
 
   checkMove(horizontal, vertical) {
@@ -113,7 +111,7 @@ class Rook extends Square {
       // KING DEFINITON
 
       for (let piece in board) {
-        if (board[piece] instanceof King && board[piece].player !== this.player) {
+        if (board[piece] instanceof King && board[piece].player === this.player) {
           king = piece;
           break;
         }

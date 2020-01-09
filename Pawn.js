@@ -76,7 +76,7 @@ class Pawn extends Square {
 // KING DEFINITON
 
       for (let piece in board) {
-        if (board[piece] instanceof King && board[piece].player !== this.player) {
+        if (board[piece] instanceof King && board[piece].player === this.player) {
           king = piece;
           break;
         }
@@ -107,7 +107,6 @@ class Pawn extends Square {
 
         switch (board[threateningPiece].constructor.name) {
           case 'Rook': {
-            debugger;
 
             if (rankIndex === rankLimit) {
               for (fileIndex; fileIndex < fileLimit; fileIndex++) {
@@ -121,11 +120,10 @@ class Pawn extends Square {
 
           } break;
           case 'Bishop': {
-            fileOffset = 0;
-
+// debugger;
             for (rankIndex; rankIndex < rankLimit; rankIndex++) {
-              blockingMoves.push(`${files[fileIndex + fileOffset]}${rankIndex}`);
-              ++fileOffset;
+              blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
+              ++fileIndex;
             }
 
           } break;

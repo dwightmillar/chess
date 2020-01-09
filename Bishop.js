@@ -15,6 +15,7 @@ class Bishop extends Square {
     $(this.piece).click(this.move);
     allPossibleMoves[this.id] = [];
     allPotentialMoves[this.id] = [];
+    blockingPieces[this.id] = [];
 
     this.checkMove(-1, -1);
 
@@ -32,6 +33,7 @@ class Bishop extends Square {
     let verticalSquareCount = vertical;
     let opponent = '';
     let checkPotentialMoves = false;
+    let potentialBlockingPiece = null;
 
     if (this.player === 'white') {
       opponent = 'black';
@@ -54,6 +56,7 @@ class Bishop extends Square {
           // if the square is occupied by an opposing piece, stop checking
           if (targetPlayer) {
             allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+            potentialBlockingPiece = board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`];
             checkPotentialMoves = true;
           }
 
@@ -68,6 +71,9 @@ class Bishop extends Square {
           allPotentialMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
           //if the square is occupied by an opposing piece, stop checking
           if (targetPlayer) {
+            if (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`] instanceof King) {
+              blockingPieces[this.id].push(potentialBlockingPiece);
+            }
             break;
           }
 
@@ -105,7 +111,7 @@ class Bishop extends Square {
   // KING DEFINITON
 
     for (let piece in board) {
-      if (board[piece] instanceof King && board[piece].player !== this.player) {
+      if (board[piece] instanceof King && board[piece].player === this.player) {
         king = piece;
         break;
       }

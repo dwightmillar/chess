@@ -67,7 +67,7 @@ class Knight extends Square {
       // KING DEFINITON
 
       for (let piece in board) {
-        if (board[piece] instanceof King && board[piece].player !== this.player) {
+        if (board[piece] instanceof King && board[piece].player === this.player) {
           king = piece;
           break;
         }
