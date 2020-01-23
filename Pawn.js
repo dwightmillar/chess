@@ -54,10 +54,14 @@ class Pawn extends Square {
       }
 
       if (leftDiagonalSquare) {
-        allPossibleMoves[this.id].push(leftDiagonalSquare);
+        if (leftDiagonalSquare.player && leftDiagonalSquare.player !== this.player) {
+          allPossibleMoves[this.id].push(leftDiagonalSquare);
+        }
       }
       if (rightDiagonalSquare) {
-        allPossibleMoves[this.id].push(rightDiagonalSquare);
+        if (rightDiagonalSquare.player && rightDiagonalSquare.player !== this.player) {
+          allPossibleMoves[this.id].push(rightDiagonalSquare);
+        }
       }
     } else {
 
@@ -89,10 +93,14 @@ class Pawn extends Square {
         switch (board[threateningPiece].constructor.name) {
           case 'Rook': {
             if (leftDiagonalSquare) {
-              allPossibleMoves[this.id].push(leftDiagonalSquare);
+              if (leftDiagonalSquare.player && leftDiagonalSquare.player !== this.player) {
+                allPossibleMoves[this.id].push(leftDiagonalSquare);
+              }
             }
             if (rightDiagonalSquare) {
-              allPossibleMoves[this.id].push(rightDiagonalSquare);
+              if (rightDiagonalSquare.player && rightDiagonalSquare.player !== this.player) {
+                allPossibleMoves[this.id].push(rightDiagonalSquare);
+              }
             }
           } break;
           case 'Bishop': {
@@ -132,10 +140,14 @@ class Pawn extends Square {
               }
             }
             if (leftDiagonalSquare) {
-              allPossibleMoves[this.id].push(leftDiagonalSquare);
+              if (leftDiagonalSquare.player && leftDiagonalSquare.player !== this.player) {
+                allPossibleMoves[this.id].push(leftDiagonalSquare);
+              }
             }
             if (rightDiagonalSquare) {
-              allPossibleMoves[this.id].push(rightDiagonalSquare);
+              if (rightDiagonalSquare.player && rightDiagonalSquare.player !== this.player) {
+                allPossibleMoves[this.id].push(rightDiagonalSquare);
+              }
             }
           } break;
           case 'Queen': {
@@ -175,15 +187,18 @@ class Pawn extends Square {
               }
             }
             if (leftDiagonalSquare) {
-              allPossibleMoves[this.id].push(leftDiagonalSquare);
+              if (leftDiagonalSquare.player && leftDiagonalSquare.player !== this.player) {
+                allPossibleMoves[this.id].push(leftDiagonalSquare);
+              }
             }
             if (rightDiagonalSquare) {
-              allPossibleMoves[this.id].push(rightDiagonalSquare);
+              if (rightDiagonalSquare.player && rightDiagonalSquare.player !== this.player) {
+                allPossibleMoves[this.id].push(rightDiagonalSquare);
+              }
             }
           }
         }
       });
     }
-    console.log(`${this.id}: `,allPossibleMoves[this.id]);
   }
 }
