@@ -143,7 +143,7 @@ class Square {
             case Rook: {
               for (let move in allPossibleMoves[square.id]) {
                 if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) && (allPossibleMoves[square.id][move].file === king.file || allPossibleMoves[square.id][move].rank === king.rank)) {
-                  break;
+                  continue;
                 } else {
                   delete allPossibleMoves[square.id][move];
                 }
@@ -155,7 +155,6 @@ class Square {
               for (let move in allPossibleMoves[square.id]) {
                 //"piece" is potentially threatening piece, "square" is the blocking piece,
                 // "move" is a possible move of the blocking piece
-                // debugger;
 
                 if (piece[0] > allPossibleMoves[square.id][move].file && square.file < allPossibleMoves[square.id][move].file) {
                   if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
@@ -191,35 +190,47 @@ class Square {
             }
             break;
             case Queen: {
-
+              //for each possible move of the blocking piece
               for (let move in allPossibleMoves[square.id]) {
                 //"piece" is potentially threatening piece, "square" is the blocking piece,
                 // "move" is a possible move of the blocking piece
-                if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move])) {
 
-                  if ((files.findIndex(element => element === allPossibleMoves[square.id][move].file) > files.findIndex(element => element === piece[0])) && (files.findIndex(element => element === allPossibleMoves[square.id][move].file) > files.findIndex(element => element === king[0]))) {
-                    break;
+                if (piece[0] > allPossibleMoves[square.id][move].file && square.file < allPossibleMoves[square.id][move].file) {
+                  if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      continue;
+                    }
                   }
-                  if ((files.findIndex(element => element === allPossibleMoves[square.id][move].file) < files.findIndex(element => element === piece[0])) && (files.findIndex(element => element === allPossibleMoves[square.id][move].file) < files.findIndex(element => element === king[0]))) {
-                    break;
+                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      continue;
+                    }
                   }
-                  if (allPossibleMoves[square.id][move].rank > piece[1] && allPossibleMoves[square.id][move].rank > king[1]) {
-                    break;
+                }
+                else if (piece[0] < allPossibleMoves[square.id][move].file && square.file > allPossibleMoves[square.id][move].file) {
+                  if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      continue;
+                    }
                   }
-                  if (allPossibleMoves[square.id][move].rank < piece[1] && allPossibleMoves[square.id][move].rank < king[1]) {
-                    break;
+                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      continue;
+                    }
                   }
-                  if (allPossibleMoves[square.id][move].id === piece) {
-                    break;
+                }
+                else if (allPossibleMoves[square.id][move].file === king.file || allPossibleMoves[square.id][move].rank === king.rank) {
+                  if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move])) {
+                    continue;
                   }
-                  if (allPossibleMoves[square.id][move].file === king[0] || allPossibleMoves[square.id][move].rank === king[1]) {
-                    break;
-                  }
-                } else {
+                }
+                else if (allPossibleMoves[square.id][move].id === piece) {
+                  continue;
+                }
+                else {
                   delete allPossibleMoves[square.id][move];
                 }
               }
-              console.log(allPossibleMoves[square.id]);
             }
             break;
           }

@@ -33,7 +33,6 @@ class Queen extends Square {
 
     this.checkMove(1, 1);
 
-    console.log(allPossibleMoves[this.id]);
   }
 
   checkMove(horizontal, vertical) {
