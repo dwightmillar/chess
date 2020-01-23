@@ -120,7 +120,6 @@ class Pawn extends Square {
 
           } break;
           case 'Bishop': {
-// debugger;
             for (rankIndex; rankIndex < rankLimit; rankIndex++) {
               blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
               ++fileIndex;
@@ -128,25 +127,20 @@ class Pawn extends Square {
 
           } break;
           case 'Queen': {
-            fileOffset = 0;
 
             if (rankIndex === rankLimit) {
               for (fileIndex; fileIndex < fileLimit; fileIndex++) {
                 blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
               }
-            }
-
-            else if (fileIndex === fileLimit) {
+            } else {
               for (rankIndex; rankIndex < rankLimit; rankIndex++) {
                 blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
               }
             }
 
-            else {
-              for (rankIndex; rankIndex < rankLimit; rankIndex++) {
-                blockingMoves.push(`${files[fileIndex + fileOffset]}${rankIndex}`);
-                ++fileOffset;
-              }
+            for (rankIndex; rankIndex < rankLimit; rankIndex++) {
+              blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
+              ++fileIndex;
             }
           }
         }
