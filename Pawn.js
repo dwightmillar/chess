@@ -61,8 +61,6 @@ class Pawn extends Square {
       }
     } else {
 
-      let blockingMoves = [];
-
       let king = null;
 
       let rankLimit = null;
@@ -84,11 +82,53 @@ class Pawn extends Square {
 
       threateningPieces.forEach(threateningPiece => {
 
-        // BLOCKINGMOVES DEFINITION
-
         switch (board[threateningPiece].constructor.name) {
 
           case 'Rook': {
+            if (oneSquareForward) {
+              if (allPossibleMoves[threateningPiece].includes(oneSquareForward)) {
+                if (oneSquareForward.file > king[0] && oneSquareForward.file < threateningPiece[0]) {
+                  if (oneSquareForward.rank === king[1]) {
+                    allPossibleMoves[this.id].push(oneSquareForward);
+                  }
+                } else if (oneSquareForward.file < king[0] && oneSquareForward.file > threateningPiece[0]) {
+                  if (oneSquareForward.rank === king[1]) {
+                    allPossibleMoves[this.id].push(oneSquareForward);
+                  }
+                } else if (oneSquareForward.file === king[0]) {
+                  if (oneSquareForward.rank > king[1] && oneSquareForward.rank < threateningPiece[1]) {
+                    allPossibleMoves[this.id].push(oneSquareForward);
+                  }
+                  else if (oneSquareForward.rank < king[1] && oneSquareForward.rank > threateningPiece[1]) {
+                    allPossibleMoves[this.id].push(oneSquareForward);
+                  }
+                }
+              }
+            }
+
+            if (!this.hasMoved) {
+              if (twoSquaresForward) {
+                if (allPossibleMoves[threateningPiece].includes(twoSquaresForward)) {
+                  if (twoSquaresForward.file > king[0] && twoSquaresForward.file < threateningPiece[0]) {
+                    if (twoSquaresForward.rank === king[1]) {
+                      allPossibleMoves[this.id].push(twoSquaresForward);
+                    }
+                  } else if (twoSquaresForward.file < king[0] && twoSquaresForward.file > threateningPiece[0]) {
+                    if (twoSquaresForward.rank === king[1]) {
+                      allPossibleMoves[this.id].push(twoSquaresForward);
+                    }
+                  } else if (twoSquaresForward.file === king[0]) {
+                    if (twoSquaresForward.rank > king[1] && twoSquaresForward.rank < threateningPiece[1]) {
+                      allPossibleMoves[this.id].push(twoSquaresForward);
+                    }
+                    else if (twoSquaresForward.rank < king[1] && twoSquaresForward.rank > threateningPiece[1]) {
+                      allPossibleMoves[this.id].push(twoSquaresForward);
+                    }
+                  }
+                }
+              }
+            }
+
             if (leftDiagonalSquare) {
               if (leftDiagonalSquare.id === threateningPiece) {
                 allPossibleMoves[this.id].push(leftDiagonalSquare);
@@ -200,6 +240,19 @@ class Pawn extends Square {
               }
             }
 
+            if (leftDiagonalSquare) {
+              if (leftDiagonalSquare.id === threateningPiece) {
+                allPossibleMoves[this.id].push(leftDiagonalSquare);
+              }
+            }
+            if (rightDiagonalSquare) {
+              if (rightDiagonalSquare.id === threateningPiece) {
+                allPossibleMoves[this.id].push(rightDiagonalSquare);
+              }
+            }
+          } break;
+
+          default: {
             if (leftDiagonalSquare) {
               if (leftDiagonalSquare.id === threateningPiece) {
                 allPossibleMoves[this.id].push(leftDiagonalSquare);
