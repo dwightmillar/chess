@@ -80,7 +80,9 @@ class Queen extends Square {
             //if the square is occupied by an opposing piece, stop checking
             if (targetPlayer) {
               if (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`] instanceof King) {
-                blockingPieces[this.id].push(potentialBlockingPiece);
+                if (potentialBlockingPiece) {
+                  blockingPieces[this.id].push(potentialBlockingPiece);
+                }
               }
               break;
             }

@@ -91,108 +91,126 @@ class Pawn extends Square {
         // BLOCKINGMOVES DEFINITION
 
         switch (board[threateningPiece].constructor.name) {
+
           case 'Rook': {
             if (leftDiagonalSquare) {
-              if (leftDiagonalSquare.player && leftDiagonalSquare.player !== this.player) {
+              if (leftDiagonalSquare.id === threateningPiece) {
                 allPossibleMoves[this.id].push(leftDiagonalSquare);
               }
             }
             if (rightDiagonalSquare) {
-              if (rightDiagonalSquare.player && rightDiagonalSquare.player !== this.player) {
+              if (rightDiagonalSquare.id === threateningPiece) {
                 allPossibleMoves[this.id].push(rightDiagonalSquare);
               }
             }
           } break;
+
           case 'Bishop': {
-            if (oneSquareForward.file > king[0] && oneSquareForward.file < threateningPiece[0]) {
-              if (oneSquareForward.rank > king[1] && oneSquareForward.rank < threateningPiece[1]) {
-                allPossibleMoves[this.id].push(oneSquareForward);
-              }
-              else if (oneSquareForward.rank < king[1] && oneSquareForward.rank > threateningPiece[1]) {
-                allPossibleMoves[this.id].push(oneSquareForward);
-              }
-            }
-            else if (oneSquareForward.file < king[0] && oneSquareForward.file > threateningPiece[0]) {
-              if (oneSquareForward.rank > king[1] && oneSquareForward.rank < threateningPiece[1]) {
-                allPossibleMoves[this.id].push(oneSquareForward);
-              }
-              else if (oneSquareForward.rank < king[1] && oneSquareForward.rank > threateningPiece[1]) {
-                allPossibleMoves[this.id].push(oneSquareForward);
+            if (oneSquareForward) {
+              if (allPossibleMoves[threateningPiece].includes(oneSquareForward)) {
+                if (oneSquareForward.file > king[0] && oneSquareForward.file < threateningPiece[0]) {
+                  if (oneSquareForward.rank > king[1] && oneSquareForward.rank < threateningPiece[1]) {
+                    allPossibleMoves[this.id].push(oneSquareForward);
+                  }
+                  else if (oneSquareForward.rank < king[1] && oneSquareForward.rank > threateningPiece[1]) {
+                    allPossibleMoves[this.id].push(oneSquareForward);
+                  }
+                } else if (oneSquareForward.file < king[0] && oneSquareForward.file > threateningPiece[0]) {
+                  if (oneSquareForward.rank > king[1] && oneSquareForward.rank < threateningPiece[1]) {
+                    allPossibleMoves[this.id].push(oneSquareForward);
+                  }
+                  else if (oneSquareForward.rank < king[1] && oneSquareForward.rank > threateningPiece[1]) {
+                    allPossibleMoves[this.id].push(oneSquareForward);
+                  }
+                }
               }
             }
 
             if (!this.hasMoved) {
-              if (twoSquaresForward.file > king[0] && twoSquaresForward.file < threateningPiece[0]) {
-                if (twoSquaresForward.rank > king[1] && twoSquaresForward.rank < threateningPiece[1]) {
-                  allPossibleMoves[this.id].push(twoSquaresForward);
-                }
-                else if (twoSquaresForward.rank < king[1] && twoSquaresForward.rank > threateningPiece[1]) {
-                  allPossibleMoves[this.id].push(twoSquaresForward);
-                }
-              }
-              else if (twoSquaresForward.file < king[0] && twoSquaresForward.file > threateningPiece[0]) {
-                if (twoSquaresForward.rank > king[1] && twoSquaresForward.rank < threateningPiece[1]) {
-                  allPossibleMoves[this.id].push(twoSquaresForward);
-                }
-                else if (twoSquaresForward.rank < king[1] && twoSquaresForward.rank > threateningPiece[1]) {
-                  allPossibleMoves[this.id].push(twoSquaresForward);
+              if (twoSquaresForward) {
+                if (allPossibleMoves[threateningPiece].includes(twoSquaresForward)) {
+                  if (twoSquaresForward.file > king[0] && twoSquaresForward.file < threateningPiece[0]) {
+                    if (twoSquaresForward.rank > king[1] && twoSquaresForward.rank < threateningPiece[1]) {
+                      allPossibleMoves[this.id].push(twoSquaresForward);
+                    }
+                    else if (twoSquaresForward.rank < king[1] && twoSquaresForward.rank > threateningPiece[1]) {
+                      allPossibleMoves[this.id].push(twoSquaresForward);
+                    }
+                  }
+                  else if (twoSquaresForward.file < king[0] && twoSquaresForward.file > threateningPiece[0]) {
+                    if (twoSquaresForward.rank > king[1] && twoSquaresForward.rank < threateningPiece[1]) {
+                      allPossibleMoves[this.id].push(twoSquaresForward);
+                    }
+                    else if (twoSquaresForward.rank < king[1] && twoSquaresForward.rank > threateningPiece[1]) {
+                      allPossibleMoves[this.id].push(twoSquaresForward);
+                    }
+                  }
                 }
               }
             }
+
             if (leftDiagonalSquare) {
-              if (leftDiagonalSquare.player && leftDiagonalSquare.player !== this.player) {
+              if (leftDiagonalSquare.id === threateningPiece) {
                 allPossibleMoves[this.id].push(leftDiagonalSquare);
               }
             }
             if (rightDiagonalSquare) {
-              if (rightDiagonalSquare.player && rightDiagonalSquare.player !== this.player) {
+              if (rightDiagonalSquare.id === threateningPiece) {
                 allPossibleMoves[this.id].push(rightDiagonalSquare);
               }
             }
           } break;
           case 'Queen': {
-            if (oneSquareForward.file > king[0] && oneSquareForward.file < threateningPiece[0]) {
-              if (oneSquareForward.rank > king[1] && oneSquareForward.rank < threateningPiece[1]) {
-                allPossibleMoves[this.id].push(oneSquareForward);
-              }
-              else if (oneSquareForward.rank < king[1] && oneSquareForward.rank > threateningPiece[1]) {
-                allPossibleMoves[this.id].push(oneSquareForward);
-              }
-            }
-            else if (oneSquareForward.file < king[0] && oneSquareForward.file > threateningPiece[0]) {
-              if (oneSquareForward.rank > king[1] && oneSquareForward.rank < threateningPiece[1]) {
-                allPossibleMoves[this.id].push(oneSquareForward);
-              }
-              else if (oneSquareForward.rank < king[1] && oneSquareForward.rank > threateningPiece[1]) {
-                allPossibleMoves[this.id].push(oneSquareForward);
+            if (oneSquareForward) {
+              if (allPossibleMoves[threateningPiece].includes(oneSquareForward)) {
+                if (oneSquareForward.file > king[0] && oneSquareForward.file < threateningPiece[0]) {
+                  if (oneSquareForward.rank > king[1] && oneSquareForward.rank < threateningPiece[1]) {
+                    allPossibleMoves[this.id].push(oneSquareForward);
+                  }
+                  else if (oneSquareForward.rank < king[1] && oneSquareForward.rank > threateningPiece[1]) {
+                    allPossibleMoves[this.id].push(oneSquareForward);
+                  }
+                } else if (oneSquareForward.file < king[0] && oneSquareForward.file > threateningPiece[0]) {
+                  if (oneSquareForward.rank > king[1] && oneSquareForward.rank < threateningPiece[1]) {
+                    allPossibleMoves[this.id].push(oneSquareForward);
+                  }
+                  else if (oneSquareForward.rank < king[1] && oneSquareForward.rank > threateningPiece[1]) {
+                    allPossibleMoves[this.id].push(oneSquareForward);
+                  }
+                }
               }
             }
 
             if (!this.hasMoved) {
-              if (twoSquaresForward.file > king[0] && twoSquaresForward.file < threateningPiece[0]) {
-                if (twoSquaresForward.rank > king[1] && twoSquaresForward.rank < threateningPiece[1]) {
-                  allPossibleMoves[this.id].push(twoSquaresForward);
-                }
-                else if (twoSquaresForward.rank < king[1] && twoSquaresForward.rank > threateningPiece[1]) {
-                  allPossibleMoves[this.id].push(twoSquaresForward);
-                }
-              }
-              else if (twoSquaresForward.file < king[0] && twoSquaresForward.file > threateningPiece[0]) {
-                if (twoSquaresForward.rank > king[1] && twoSquaresForward.rank < threateningPiece[1]) {
-                  allPossibleMoves[this.id].push(twoSquaresForward);
-                }
-                else if (twoSquaresForward.rank < king[1] && twoSquaresForward.rank > threateningPiece[1]) {
-                  allPossibleMoves[this.id].push(twoSquaresForward);
+              if (twoSquaresForward) {
+                if (allPossibleMoves[threateningPiece].includes(twoSquaresForward)) {
+                  if (twoSquaresForward.file > king[0] && twoSquaresForward.file < threateningPiece[0]) {
+                    if (twoSquaresForward.rank > king[1] && twoSquaresForward.rank < threateningPiece[1]) {
+                      allPossibleMoves[this.id].push(twoSquaresForward);
+                    }
+                    else if (twoSquaresForward.rank < king[1] && twoSquaresForward.rank > threateningPiece[1]) {
+                      allPossibleMoves[this.id].push(twoSquaresForward);
+                    }
+                  }
+                  else if (twoSquaresForward.file < king[0] && twoSquaresForward.file > threateningPiece[0]) {
+                    if (twoSquaresForward.rank > king[1] && twoSquaresForward.rank < threateningPiece[1]) {
+                      allPossibleMoves[this.id].push(twoSquaresForward);
+                    }
+                    else if (twoSquaresForward.rank < king[1] && twoSquaresForward.rank > threateningPiece[1]) {
+                      allPossibleMoves[this.id].push(twoSquaresForward);
+                    }
+                  }
                 }
               }
             }
+
             if (leftDiagonalSquare) {
-              if (leftDiagonalSquare.player && leftDiagonalSquare.player !== this.player) {
+              if (leftDiagonalSquare.id === threateningPiece) {
                 allPossibleMoves[this.id].push(leftDiagonalSquare);
               }
             }
             if (rightDiagonalSquare) {
-              if (rightDiagonalSquare.player && rightDiagonalSquare.player !== this.player) {
+              if (rightDiagonalSquare.id === threateningPiece) {
                 allPossibleMoves[this.id].push(rightDiagonalSquare);
               }
             }

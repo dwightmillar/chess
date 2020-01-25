@@ -1,7 +1,11 @@
-$boardLength: 800px;
+$boardLength: 100vh;
 
 body {
   margin: 0;
+  background-image: url('./images/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
 }
 
 main {
