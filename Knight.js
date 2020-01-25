@@ -33,7 +33,6 @@ class Knight extends Square {
   }
 
   checkMove(horizontal, vertical) {
-    let targetPlayer = '';
     let opponent = '';
     let position = `${files[files.findIndex((element) => element === this.file) + horizontal]}${this.rank + vertical}`;
 
@@ -45,10 +44,7 @@ class Knight extends Square {
 
     if (isInCheck !== this.player) {
       if (board[position]) {
-        targetPlayer = board[position].player;
-        if (!targetPlayer || targetPlayer === opponent) {
-          allPossibleMoves[this.id].push(board[position]);
-        }
+        allPossibleMoves[this.id].push(board[position]);
       }
     } else {
 
@@ -144,14 +140,11 @@ class Knight extends Square {
         }
 
         if (board[position]) {
-          targetPlayer = board[position].player;
-          if (!targetPlayer || targetPlayer === opponent) {
-            if (blockingMoves.findIndex((element) => element === board[position].id) > 0) {
-              allPossibleMoves[this.id].push(board[position]);
-            }
-            if (board[position].id === threateningPiece) {
-              allPossibleMoves[this.id].push(board[position]);
-            }
+          if (blockingMoves.findIndex((element) => element === board[position].id) > 0) {
+            allPossibleMoves[this.id].push(board[position]);
+          }
+          if (board[position].id === threateningPiece) {
+            allPossibleMoves[this.id].push(board[position]);
           }
         }
       })

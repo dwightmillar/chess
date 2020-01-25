@@ -40,7 +40,16 @@ class Square {
             }
           }
         }
-      } else {
+      } else if (activePiece instanceof Knight) {
+        if (possibleMoves[0]) {
+          for (let move in possibleMoves) {
+            if (possibleMoves[move].player !== this.player) {
+              possibleMoves[move].div[0].style.backgroundColor = 'cyan';
+              $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
+            }
+          }
+        }
+      }else {
         if (possibleMoves.length > 0) {
           for (let move in possibleMoves) {
             if (possibleMoves[move].player !== this.player) {
