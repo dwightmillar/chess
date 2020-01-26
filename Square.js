@@ -102,25 +102,42 @@ class Square {
     let king = null;
 
     board[activePiece.id] = new Square(activePiece.file, activePiece.rank, '', activePiece.color);
-    switch (activePiece.piece[0].classList[1]) {
-      case 'Pawn': {
-        board[possibleMoves[move].id] = new Pawn(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
-      } break;
-      case 'Rook': {
-        board[possibleMoves[move].id] = new Rook(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
-      } break;
-      case 'Knight': {
-        board[possibleMoves[move].id] = new Knight(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
-      } break;
-      case 'Bishop': {
-        board[possibleMoves[move].id] = new Bishop(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
-      } break;
-      case 'King': {
-        board[possibleMoves[move].id] = new King(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
-      } break;
-      case 'Queen': {
-        board[possibleMoves[move].id] = new Queen(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
-      } break;
+
+    if (activePiece instanceof King && !activePiece.hasMoved && (target.file === 'c' || target.file === 'g')) {
+      board[possibleMoves[move].id] = new King(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
+
+      if (target.file === 'c') {
+
+        board[`d${target.rank}`] = new Rook('d', target.rank, activePiece.piece, activePiece.player, board[`d${target.rank}`].color, true);
+        board[`a${target.rank}`] = new Square('a', target.rank, activePiece.player, target.color);
+
+      } else {
+
+        board[`f${target.rank}`] = new Rook('f', target.rank, activePiece.piece, activePiece.player, board[`f${target.rank}`].color, true);
+        board[`h${target.rank}`] = new Square('h', target.rank, activePiece.player, target.color, true);
+
+      }
+    } else {
+      switch (activePiece.piece[0].classList[1]) {
+        case 'Pawn': {
+          board[possibleMoves[move].id] = new Pawn(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
+        } break;
+        case 'Rook': {
+          board[possibleMoves[move].id] = new Rook(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
+        } break;
+        case 'Knight': {
+          board[possibleMoves[move].id] = new Knight(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
+        } break;
+        case 'Bishop': {
+          board[possibleMoves[move].id] = new Bishop(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
+        } break;
+        case 'King': {
+          board[possibleMoves[move].id] = new King(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
+        } break;
+        case 'Queen': {
+          board[possibleMoves[move].id] = new Queen(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
+        } break;
+      }
     }
 
     if (playerTurn === 'white') {

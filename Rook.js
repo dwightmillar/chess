@@ -1,7 +1,7 @@
 class Rook extends Square {
-  constructor(file, rank, piece, player, color) {
-    super(file, rank, player, color);
-    this.hasMoved = false;
+  constructor(file, rank, piece, player, color, hasMoved) {
+    super(file, rank, player, color, hasMoved);
+    this.hasMoved = hasMoved;
     this.piece = $('<div>', {
       class: `${player} Rook`
     })

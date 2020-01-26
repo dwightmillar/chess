@@ -1,7 +1,6 @@
 class King extends Square {
-  constructor(file, rank, piece, player, color) {
-    super(file, rank, player, color);
-    this.hasMoved = false;
+  constructor(file, rank, piece, player, color, hasMoved) {
+    super(file, rank, player, color, hasMoved);
     this.piece = $('<div>', {
       class: `${player} King`
     })
@@ -30,6 +29,11 @@ class King extends Square {
     this.checkMove(-1, 0);
 
     this.checkMove(-1, -1);
+
+    if (!this.hasMoved) {
+      this.kingsideCastle();
+      this.queensideCastle();
+    }
 
   }
 
@@ -150,6 +154,34 @@ class King extends Square {
       //if no opposing piece has possible moves for that position, the King can move there
       if (canMove) {
         allPossibleMoves[this.id].push(board[position]);
+      }
+    }
+  }
+
+  kingsideCastle() {
+    for (let piece in board) {
+      if (board[piece] instanceof Rook && board[piece].player === this.player && board[piece].file === 'h') {
+        if (!board[piece].hasMoved) {
+
+          if (!board[`f${piece[1]}`].piece && !board[`g${piece[1]}`].piece) {
+            allPossibleMoves[this.id].push(board[`g${piece[1]}`]);
+
+          }
+        }
+      }
+    }
+  }
+
+  queensideCastle() {
+    for (let piece in board) {
+      if (board[piece] instanceof Rook && board[piece].player === this.player && board[piece].file === 'a') {
+        if (!board[piece].hasMoved) {
+
+          if (!board[`b${piece[1]}`].piece && !board[`c${piece[1]}`].piece && !board[`d${piece[1]}`].piece) {
+            allPossibleMoves[this.id].push(board[`c${piece[1]}`]);
+
+          }
+        }
       }
     }
   }
