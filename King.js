@@ -65,31 +65,15 @@ class King extends Square {
     if (isInCheck !== this.player) {
       //for every piece on the board
       for (let piece in board) {
-        let firstDiagonal = '';
-        let secondDiagonal = '';
-        let pawn = '';
         //if the piece is an opponent
         if (board[piece].player === opponent) {
           //if the piece is a Pawn
           if (board[piece] instanceof Pawn) {
             // if the position to be moved to is a possible move of a Pawn,
-            if (allPossibleMoves[piece].findIndex(element => element.id === position) !== -1) {
-              // identify the diagonal moves of the Pawn
-              for (let possibleMove in allPossibleMoves[piece]) {
-                if (allPossibleMoves[piece][possibleMove].id[0] !== board[piece].id[0]) {
-                  if (!firstDiagonal) {
-                    pawn = board[piece];
-                    firstDiagonal = allPossibleMoves[piece][possibleMove].id;
-                  } else {
-                    secondDiagonal = allPossibleMoves[piece][possibleMove].id;
-                  }
-                }
-              }
-              // and check if the position to be moved to is a diagonal move
-              if (position === firstDiagonal || position === secondDiagonal) {
+            if (allPossibleMoves[piece].findIndex(possibleMove => possibleMove.id === position) !== -1) {
+              //if the file of the position to be moved to is not the same as the file of the pawn, can't move there
+              if (position[0] !== board[piece].file) {
                 canMove = false;
-              } else {
-                continue;
               }
             } else {
               //if it's not a possible move of the Pawn, then you won't be checking for anything
@@ -97,7 +81,10 @@ class King extends Square {
             }
 
 
-          } else {
+          } else if (board[piece] instanceof King) {
+            allPossibleMoves[this.id].push(board[position]);
+
+          }else {
             // if the position to be moved to is a possible move of an opposing piece, you can't move there
             if (allPossibleMoves[piece].findIndex(element => element.id === position) !== -1) {
               canMove = false;
@@ -115,7 +102,6 @@ class King extends Square {
       for (let piece in board) {
         let firstDiagonal = '';
         let secondDiagonal = '';
-        let pawn = '';
         //if the piece is an opponent
         if (board[piece].player === opponent) {
           //if the piece is a Pawn
@@ -126,7 +112,6 @@ class King extends Square {
               for (let possibleMove in allPossibleMoves[piece]) {
                 if (allPossibleMoves[piece][possibleMove].id[0] !== board[piece].id[0]) {
                   if (!firstDiagonal) {
-                    pawn = board[piece];
                     firstDiagonal = allPossibleMoves[piece][possibleMove].id;
                   } else {
                     secondDiagonal = allPossibleMoves[piece][possibleMove].id;

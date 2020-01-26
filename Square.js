@@ -23,6 +23,7 @@ class Square {
     }
 
     let possibleMoves = [];
+    let king = null;
 
     if (!activePiece) {
 
@@ -30,6 +31,15 @@ class Square {
       activePiece.div[0].style.backgroundColor = 'yellow';
 
       possibleMoves = allPossibleMoves[this.id];
+
+      // KING DEFINITON
+
+      for (let piece in board) {
+        if (board[piece] instanceof King && board[piece].player !== this.player) {
+          king = piece;
+          break;
+        }
+      }
 
       if (activePiece instanceof Pawn) {
         if (possibleMoves[0]) {
@@ -44,6 +54,15 @@ class Square {
         if (possibleMoves[0]) {
           for (let move in possibleMoves) {
             if (possibleMoves[move].player !== this.player) {
+              possibleMoves[move].div[0].style.backgroundColor = 'cyan';
+              $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
+            }
+          }
+        }
+      } else if (activePiece instanceof King) {
+        if (possibleMoves[0]) {
+          for (let move in possibleMoves) {
+            if (possibleMoves[move].player !== this.player && !allPossibleMoves[king].includes(possibleMoves[move])) {
               possibleMoves[move].div[0].style.backgroundColor = 'cyan';
               $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
             }
