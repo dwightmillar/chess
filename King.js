@@ -159,12 +159,16 @@ class King extends Square {
   }
 
   kingsideCastle() {
-    for (let piece in board) {
-      if (board[piece] instanceof Rook && board[piece].player === this.player && board[piece].file === 'h') {
-        if (!board[piece].hasMoved) {
-
-          if (!board[`f${piece[1]}`].piece && !board[`g${piece[1]}`].piece) {
-            allPossibleMoves[this.id].push(board[`g${piece[1]}`]);
+    for (let space in board) {
+      if (board[space] instanceof Rook && board[space].player === this.player && board[space].file === 'h') {
+        if (!board[space].hasMoved) {
+          if (!board[`f${space[1]}`].piece && !board[`g${space[1]}`].piece) {
+            for (let piece in allPossibleMoves) {
+              if (board[piece].player !== this.player && allPossibleMoves[piece].includes(board[`g${space[1]}`])) {
+                return;
+              }
+            }
+            allPossibleMoves[this.id].push(board[`g${space[1]}`]);
 
           }
         }
@@ -173,12 +177,17 @@ class King extends Square {
   }
 
   queensideCastle() {
-    for (let piece in board) {
-      if (board[piece] instanceof Rook && board[piece].player === this.player && board[piece].file === 'a') {
-        if (!board[piece].hasMoved) {
+    for (let space in board) {
+      if (board[space] instanceof Rook && board[space].player === this.player && board[space].file === 'a') {
+        if (!board[space].hasMoved) {
 
-          if (!board[`b${piece[1]}`].piece && !board[`c${piece[1]}`].piece && !board[`d${piece[1]}`].piece) {
-            allPossibleMoves[this.id].push(board[`c${piece[1]}`]);
+          if (!board[`b${space[1]}`].piece && !board[`c${space[1]}`].piece && !board[`d${space[1]}`].piece) {
+            for (let piece in allPossibleMoves) {
+              if (board[piece].player !== this.player && allPossibleMoves[piece].includes(board[`c${space[1]}`])) {
+                return;
+              }
+            }
+            allPossibleMoves[this.id].push(board[`c${space[1]}`]);
 
           }
         }

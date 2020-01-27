@@ -114,7 +114,7 @@ class Square {
       } else {
 
         board[`f${target.rank}`] = new Rook('f', target.rank, activePiece.piece, activePiece.player, board[`f${target.rank}`].color, true);
-        board[`h${target.rank}`] = new Square('h', target.rank, activePiece.player, target.color, true);
+        board[`h${target.rank}`] = new Square('h', target.rank, activePiece.player, board[`h${target.rank}`].color, true);
 
       }
     } else {
