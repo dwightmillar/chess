@@ -36,6 +36,7 @@ class Queen extends Square {
   }
 
   checkMove(horizontal, vertical) {
+
     let targetPlayer = '';
     let horizontalSquareCount = horizontal;
     let verticalSquareCount = vertical;
@@ -55,7 +56,6 @@ class Queen extends Square {
       while (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]) {
 
         targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`].player;
-
         if (checkPotentialMoves === false) {
           // if the square is not occupied by the same player
           if (targetPlayer !== this.player) {
@@ -80,6 +80,7 @@ class Queen extends Square {
             //if the square is occupied by an opposing piece, stop checking
             if (targetPlayer) {
               if (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`] instanceof King) {
+
                 if (potentialBlockingPiece) {
                   blockingPieces[this.id].push(potentialBlockingPiece);
                 }
