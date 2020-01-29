@@ -72,7 +72,7 @@ class King extends Square {
         //if the piece is an opponent
         if (board[piece].player === opponent) {
           //if the piece is a Pawn
-          if (board[piece] instanceof Pawn) {
+          if (board[piece] instanceof Pawn && !(board[piece] instanceof King)) {
             // if the position to be moved to is a possible move of a Pawn,
             if (allPossibleMoves[piece].findIndex(possibleMove => possibleMove.id === position) !== -1) {
               //if the file of the position to be moved to is not the same as the file of the pawn, can't move there
@@ -85,13 +85,12 @@ class King extends Square {
             }
 
 
-          } else if (board[piece] instanceof King) {
-            allPossibleMoves[this.id].push(board[position]);
-
-          }else {
+          }
+          else {
             // if the position to be moved to is a possible move of an opposing piece, you can't move there
             if (allPossibleMoves[piece].findIndex(element => element.id === position) !== -1) {
               canMove = false;
+              break;
             }
           }
         }

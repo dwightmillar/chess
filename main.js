@@ -48,8 +48,9 @@
       }
       $('main').append(rank);
     }
-    console.log(`It's ${playerTurn}'s turn!`);
   }
+
+
 
 function checkBlockingPieces() {
   // KING DEFINITON
@@ -119,8 +120,7 @@ function checkBlockingPieces() {
                 delete allPossibleMoves[square.id][move];
               }
             }
-          }
-            break;
+          } break;
           case Queen: {
             //for each possible move of the blocking piece
             for (let move in allPossibleMoves[square.id]) {
@@ -168,5 +168,44 @@ function checkBlockingPieces() {
         }
       });
     }
+  }
+}
+
+function checkForCheck() {
+  let checkMessage = null;
+  for (let piece in allPossibleMoves) {
+    for (let space in Object.values(allPossibleMoves[piece])) {
+      if (Object.values(allPossibleMoves[piece])[space] instanceof King && Object.values(allPossibleMoves[piece])[space].player !== board[piece].player) {
+        isInCheck = Object.values(allPossibleMoves[piece])[space].player;
+        threateningPieces.push(piece);
+        checkMessage = `${playerTurn}`[0].toUpperCase() + `${playerTurn.slice(1)} is put in check by ${board[piece].piece[0].classList[1]}[${piece[0].toUpperCase() + piece[1]}]`;
+      }
+    }
+  }
+  loadBoard(board);
+
+  if (isInCheck) {
+    console.log(checkMessage);
+    let moveCounter = 0;
+    for (let square in board) {
+      if (board[square].player === isInCheck) {
+        moveCounter += allPossibleMoves[square].length;
+      }
+    }
+    if (moveCounter === 0) {
+      console.log('Checkmate!');
+      playerTurn = null;
+    }
+  }
+  if (playerTurn) {
+    console.log(`It's ${playerTurn}'s turn!`);
+  }
+}
+
+function switchTurns() {
+  if (playerTurn === 'white') {
+    playerTurn = 'black';
+  } else {
+    playerTurn = 'white';
   }
 }

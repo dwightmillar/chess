@@ -97,6 +97,7 @@ class Square {
     if (!activePiece) {
       return;
     }
+
     var target = board[possibleMoves[move].id];
     let king = null;
 
@@ -116,6 +117,12 @@ class Square {
         board[`h${target.rank}`] = new Square('h', target.rank, activePiece.player, board[`h${target.rank}`].color, true);
 
       }
+
+      switchTurns();
+      loadBoard(board);
+      checkForCheck();
+      checkBlockingPieces();
+
     } else if (activePiece instanceof Pawn && (target.rank === 1 || target.rank === 8)){
       board[possibleMoves[move].id] = new Pawn(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
       $('#pieceSelection').show();
@@ -124,7 +131,10 @@ class Square {
       $('#selectBishop').click(function() {
         let pawn = this.parentElement.children[0].id;
         board[pawn] = new Bishop(pawn[0], parseInt(pawn[1]), null, board[pawn].player, board[pawn].color, true);
+
+        switchTurns();
         loadBoard(board);
+        checkForCheck();
         checkBlockingPieces();
 
         $('#pieceSelection').hide();
@@ -133,7 +143,10 @@ class Square {
       $('#selectRook').click(function() {
         let pawn = this.parentElement.children[0].id;
         board[pawn] = new Rook(pawn[0], parseInt(pawn[1]), null, board[pawn].player, board[pawn].color, true);
+
+        switchTurns();
         loadBoard(board);
+        checkForCheck();
         checkBlockingPieces();
 
         $('#pieceSelection').hide();
@@ -142,7 +155,10 @@ class Square {
       $('#selectQueen').click(function() {
         let pawn = this.parentElement.children[0].id;
         board[pawn] = new Queen(pawn[0], parseInt(pawn[1]), null, board[pawn].player, board[pawn].color, true);
+
+        switchTurns();
         loadBoard(board);
+        checkForCheck();
         checkBlockingPieces();
 
         $('#pieceSelection').hide();
@@ -169,52 +185,25 @@ class Square {
           board[possibleMoves[move].id] = new Queen(target.file, target.rank, activePiece.piece, activePiece.player, target.color, true);
         } break;
       }
-    }
 
-    if (playerTurn === 'white') {
-      playerTurn = 'black';
-    } else {
-      playerTurn = 'white';
+      switchTurns();
+      loadBoard(board);
+      checkForCheck();
+      checkBlockingPieces();
+
     }
 
     isInCheck = '';
     threateningPieces = [];
     blockingPieces = {};
 
-    loadBoard(board);
 
     for (let move in possibleMoves) {
       possibleMoves[move].div[0].style.backgroundColor = possibleMoves[move].color;
     }
-    for (let piece in allPossibleMoves) {
-      for (let space in Object.values(allPossibleMoves[piece])) {
-        if (Object.values(allPossibleMoves[piece])[space] instanceof King && Object.values(allPossibleMoves[piece])[space].player !== board[piece].player) {
-          isInCheck = Object.values(allPossibleMoves[piece])[space].player;
-          threateningPieces.push(piece);
-          console.log(`${playerTurn}`[0].toUpperCase() + `${playerTurn.slice(1)} is put in check by ${board[piece].piece[0].classList[1]}[${piece[0].toUpperCase() + piece[1]}]`);
-          loadBoard(board);
-        }
-      }
-    }
 
-    if (isInCheck) {
-      let moveCounter = 0;
-      for (let square in board) {
-        if (board[square].player === isInCheck) {
-          moveCounter += allPossibleMoves[square].length;
-        }
-      }
-      if (moveCounter === 0) {
-        console.log('Checkmate!');
-        playerTurn = null;
-      }
-    } else {
-
-      checkBlockingPieces();
-
-      activePiece.div[0].style.backgroundColor = activePiece.color;
-      possibleMoves = [];
-      activePiece = '';
-    }
+    activePiece.div[0].style.backgroundColor = activePiece.color;
+    possibleMoves = [];
+    activePiece = '';
   }
 }
