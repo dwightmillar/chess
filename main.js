@@ -277,7 +277,6 @@ function checkForCheck() {
           whiteMoveCount += allPossibleMoves[square].length;
 
         } else if (board[square] instanceof King) {
-
           //for every possible move of the King
           for (let move in allPossibleMoves[square]) {
             let canMove = true;
@@ -312,7 +311,7 @@ function checkForCheck() {
               }
             }
             //if no opposing piece has possible moves for that position, the King can move there
-            if (canMove && allPossibleMoves[square][move].player !== this.player && !allPossibleMoves[king].includes(allPossibleMoves[square][move])) {
+            if (canMove) {
               ++whiteMoveCount;
             }
           }
@@ -360,7 +359,7 @@ function checkForCheck() {
               }
             }
             //if no opposing piece has possible moves for that position, the King can move there
-            if (canMove && allPossibleMoves[square][move].player !== this.player && !allPossibleMoves[king].includes(allPossibleMoves[square][move])) {
+            if (canMove) {
               ++blackMoveCount;
             }
           }
