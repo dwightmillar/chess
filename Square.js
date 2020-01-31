@@ -60,15 +60,50 @@ class Square {
           }
         }
       } else if (activePiece instanceof King) {
-        if (possibleMoves[0]) {
-          for (let move in possibleMoves) {
-            if (possibleMoves[move].player !== this.player && !allPossibleMoves[king].includes(possibleMoves[move])) {
-              possibleMoves[move].div[0].style.backgroundColor = 'cyan';
-              $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
+
+        for (let move in possibleMoves) {
+          let canMove = true;
+          //for every piece on the board
+          for (let piece in board) {
+            //if the piece is an opponent
+            if (board[piece].player && board[piece].player !== this.player) {
+              //if the piece is a Pawn
+              if (board[piece] instanceof Pawn) {
+                // if the position to be moved to is a possible move of a Pawn,
+                // debugger;
+                if (allPossibleMoves[piece].includes(possibleMoves[move])) {
+                  //if the file of the position to be moved to is not the same as the file of the pawn, can't move there
+                  if (possibleMoves[move].file !== board[piece].file) {
+                    canMove = false;
+                    break;
+                  }
+                } else {
+                  //if it's not a possible move of the Pawn, then you won't be checking for anything
+                  continue;
+                }
+
+
+              }
+              else {
+                // if the position to be moved to is a possible move of an opposing piece, you can't move there
+                if (allPossibleMoves[piece].includes(possibleMoves[move])) {
+                  canMove = false;
+                  break;
+                }
+              }
             }
           }
+          //if no opposing piece has possible moves for that position, the King can move there
+          if (canMove && possibleMoves[move].player !== this.player && !allPossibleMoves[king].includes(possibleMoves[move])) {
+            possibleMoves[move].div[0].style.backgroundColor = 'cyan';
+            $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
+          }
         }
-      }else {
+
+
+      }
+
+      else {
         if (possibleMoves.length > 0) {
           for (let move in possibleMoves) {
             if (possibleMoves[move].player !== this.player) {
