@@ -72,6 +72,8 @@ class Queen extends Square {
             checkPotentialMoves = true;
           }
         } else {
+          targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`].player;
+
           if (potentialBlockingPiece instanceof King) {
             blockingPieces[this.id].push(potentialBlockingPiece);
           }

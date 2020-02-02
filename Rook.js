@@ -65,6 +65,9 @@ class Rook extends Square {
             checkPotentialMoves = true;
           }
         } else {
+          if (potentialBlockingPiece instanceof King) {
+            blockingPieces[this.id].push(potentialBlockingPiece);
+          }
           //if the square is not occupied by the same player
           if (targetPlayer !== this.player) {
             //make the square a valid move

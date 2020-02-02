@@ -93,7 +93,7 @@ class Square {
             }
           }
           if (isInCheck === this.player) {
-            // let canMove = true;
+
             for (let blockingPiece in blockingPieces) {
 
               if (blockingPieces[blockingPiece].includes(this)) {
@@ -101,27 +101,45 @@ class Square {
                 if (allPotentialMoves[blockingPiece].includes(possibleMoves[move])) {
 
                   if (this.file < blockingPiece[0] && possibleMoves[move].file >= blockingPiece[0]) {
-                    continue;
+                    if (this.rank < blockingPiece[1] && possibleMoves[move].rank >= blockingPiece[1]) {
+                      continue;
+                    }
+
+                    if (this.rank > blockingPiece[1] && possibleMoves[move].rank <= blockingPiece[1]) {
+                      continue;
+                    }
+
+                    if (this.rank === blockingPiece[1] && possibleMoves[move].rank !== blockingPiece[1]) {
+                      continue;
+                    }
                   }
 
                   if (this.file > blockingPiece[0] && possibleMoves[move].file <= blockingPiece[0]) {
-                    continue;
+                    if (this.rank < blockingPiece[1] && possibleMoves[move].rank >= blockingPiece[1]) {
+                      continue;
+                    }
+
+                    if (this.rank > blockingPiece[1] && possibleMoves[move].rank <= blockingPiece[1]) {
+                      continue;
+                    }
+
+                    if (this.rank === blockingPiece[1] && possibleMoves[move].rank !== blockingPiece[1]) {
+                      continue;
+                    }
                   }
 
                   if (this.file === blockingPiece[0] && possibleMoves[move].file !== blockingPiece[0]) {
-                    continue;
-                  }
+                    if (this.rank < blockingPiece[1] && possibleMoves[move].rank >= blockingPiece[1]) {
+                      continue;
+                    }
 
-                  if (this.rank < blockingPiece[1] && possibleMoves[move].rank >= blockingPiece[1]) {
-                    continue;
-                  }
+                    if (this.rank > blockingPiece[1] && possibleMoves[move].rank <= blockingPiece[1]) {
+                      continue;
+                    }
 
-                  if (this.rank > blockingPiece[1] && possibleMoves[move].rank <= blockingPiece[1]) {
-                    continue;
-                  }
-
-                  if (this.rank === blockingPiece[1] && possibleMoves[move].rank !== blockingPiece[1]) {
-                    continue;
+                    if (this.rank === blockingPiece[1] && possibleMoves[move].rank !== blockingPiece[1]) {
+                      continue;
+                    }
                   }
 
                   canMove = false;
