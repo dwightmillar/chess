@@ -16,6 +16,10 @@
 
   window.onload = loadBoard(board);
 
+if (playerTurn) {
+  console.log(`It's ${playerTurn}'s turn!`);
+}
+
   function loadBoard(boardData) {
 
     let squares = [];
@@ -54,8 +58,8 @@
 
 
 function checkBlockingPieces() {
-  // KING DEFINITON
 
+  // KING DEFINITON
   for (let piece in board) {
     if (board[piece] instanceof King && board[piece].player !== this.player) {
       king = piece;
@@ -67,105 +71,204 @@ function checkBlockingPieces() {
   //"let piece" is a potentially threatening piece
   for (let piece in blockingPieces) {
     //if the potentially threatening piece has any blocking pieces
-
     if (blockingPieces[piece].length > 0) {
       //for each blocking piece
       blockingPieces[piece].forEach(square => {
 
-        //what is the threatening piece?
-        switch (board[piece].constructor) {
-          case Rook: {
-            for (let move in allPossibleMoves[square.id]) {
-              if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) && (allPossibleMoves[square.id][move].file === king.file || allPossibleMoves[square.id][move].rank === king.rank)) {
-                continue;
-              } else {
-                delete allPossibleMoves[square.id][move];
-              }
-            }
-          }
-            break;
-          case Bishop: {
-            //for each possible move of the blocking piece
-            for (let move in allPossibleMoves[square.id]) {
-              //"piece" is potentially threatening piece, "square" is the blocking piece,
-              // "move" is a possible move of the blocking piece
-
-              if (piece[0] > allPossibleMoves[square.id][move].file && square.file < allPossibleMoves[square.id][move].file) {
-                if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
-                  if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
-                    continue;
-                  }
-                }
-                if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
-                  if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
-                    continue;
-                  }
-                }
-              }
-              else if (piece[0] < allPossibleMoves[square.id][move].file && square.file > allPossibleMoves[square.id][move].file) {
-                if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
-                  if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
-                    continue;
-                  }
-                }
-                if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
-                  if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
-                    continue;
-                  }
-                }
-              }
-              else if (allPossibleMoves[square.id][move].id === piece) {
-                continue;
-              }
-              else {
-                delete allPossibleMoves[square.id][move];
-              }
-            }
-          } break;
-          case Queen: {
-            //for each possible move of the blocking piece
-            for (let move in allPossibleMoves[square.id]) {
-              //"piece" is potentially threatening piece, "square" is the blocking piece,
-              // "move" is a possible move of the blocking piece
-
-              if (piece[0] > allPossibleMoves[square.id][move].file && square.file < allPossibleMoves[square.id][move].file) {
-                if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
-                  if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
-                    continue;
-                  }
-                }
-                if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
-                  if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
-                    continue;
-                  }
-                }
-              }
-              else if (piece[0] < allPossibleMoves[square.id][move].file && square.file > allPossibleMoves[square.id][move].file) {
-                if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
-                  if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
-                    continue;
-                  }
-                }
-                if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
-                  if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
-                    continue;
-                  }
-                }
-              }
-              else if (allPossibleMoves[square.id][move].file === king.file || allPossibleMoves[square.id][move].rank === king.rank) {
-                if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move])) {
+        //if the blocking piece is a king
+        if (square instanceof King) {
+          //what is the threatening piece?
+          switch (board[piece].constructor) {
+            case Rook: {
+              //for every move of the king
+              for (let move in allPossibleMoves[square.id]) {
+                if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) && (allPossibleMoves[square.id][move].file === king.file || allPossibleMoves[square.id][move].rank === king.rank)) {
+                  delete allPossibleMoves[square.id][move];
+                } else {
                   continue;
                 }
               }
-              else if (allPossibleMoves[square.id][move].id === piece) {
-                continue;
+            }
+              break;
+            case Bishop: {
+              //for each possible move of the blocking piece
+              for (let move in allPossibleMoves[square.id]) {
+                //"piece" is potentially threatening piece, "square" is the blocking piece,
+                // "move" is a possible move of the blocking piece
+
+                if (piece[0] > allPossibleMoves[square.id][move].file && square.file < allPossibleMoves[square.id][move].file) {
+                  if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      delete allPossibleMoves[square.id][move];
+                    }
+                  }
+                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      delete allPossibleMoves[square.id][move];
+                    }
+                  }
+                }
+                else if (piece[0] < allPossibleMoves[square.id][move].file && square.file > allPossibleMoves[square.id][move].file) {
+                  if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      delete allPossibleMoves[square.id][move];
+                    }
+                  }
+                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      delete allPossibleMoves[square.id][move];
+                    }
+                  }
+                }
+                else if (allPossibleMoves[square.id][move].id === piece) {
+                  continue;
+                }
+                else {
+                  continue;
+                }
               }
-              else {
-                delete allPossibleMoves[square.id][move];
+            } break;
+            case Queen: {
+              //for each possible move of the king
+              for (let move in allPossibleMoves[square.id]) {
+                //"piece" is potentially threatening piece, "square" is the blocking piece,
+                // "move" is a possible move of the king
+
+                if (piece[0] > allPossibleMoves[square.id][move].file && square.file < allPossibleMoves[square.id][move].file) {
+                  if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      delete allPossibleMoves[square.id][move];
+                    }
+                  }
+                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      delete allPossibleMoves[square.id][move];
+                    }
+                  }
+                }
+                else if (piece[0] < allPossibleMoves[square.id][move].file && square.file > allPossibleMoves[square.id][move].file) {
+                  if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      delete allPossibleMoves[square.id][move];
+                    }
+                  }
+                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      delete allPossibleMoves[square.id][move];
+                    }
+                  }
+                }
+                else if (allPossibleMoves[square.id][move].file === king.file || allPossibleMoves[square.id][move].rank === king.rank) {
+                  if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move])) {
+                    delete allPossibleMoves[square.id][move];
+                  }
+                }
+                else if (allPossibleMoves[square.id][move].id === piece) {
+                  continue;
+                }
+                else {
+                  continue;
+                }
               }
             }
+              break;
+          } //end of switch
+        } else {
+          //what is the threatening piece?
+          switch (board[piece].constructor) {
+            case Rook: {
+              for (let move in allPossibleMoves[square.id]) {
+                if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) && (allPossibleMoves[square.id][move].file === king.file || allPossibleMoves[square.id][move].rank === king.rank)) {
+                  continue;
+                } else {
+                  delete allPossibleMoves[square.id][move];
+                }
+              }
+            }
+              break;
+            case Bishop: {
+              //for each possible move of the blocking piece
+              for (let move in allPossibleMoves[square.id]) {
+                //"piece" is potentially threatening piece, "square" is the blocking piece,
+                // "move" is a possible move of the blocking piece
+
+                if (piece[0] > allPossibleMoves[square.id][move].file && square.file < allPossibleMoves[square.id][move].file) {
+                  if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      continue;
+                    }
+                  }
+                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      continue;
+                    }
+                  }
+                }
+                else if (piece[0] < allPossibleMoves[square.id][move].file && square.file > allPossibleMoves[square.id][move].file) {
+                  if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      continue;
+                    }
+                  }
+                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      continue;
+                    }
+                  }
+                }
+                else if (allPossibleMoves[square.id][move].id === piece) {
+                  continue;
+                }
+                else {
+                  delete allPossibleMoves[square.id][move];
+                }
+              }
+            } break;
+            case Queen: {
+              //for each possible move of the blocking piece
+              for (let move in allPossibleMoves[square.id]) {
+                //"piece" is potentially threatening piece, "square" is the blocking piece,
+                // "move" is a possible move of the blocking piece
+
+                if (piece[0] > allPossibleMoves[square.id][move].file && square.file < allPossibleMoves[square.id][move].file) {
+                  if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      continue;
+                    }
+                  }
+                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      continue;
+                    }
+                  }
+                }
+                else if (piece[0] < allPossibleMoves[square.id][move].file && square.file > allPossibleMoves[square.id][move].file) {
+                  if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      continue;
+                    }
+                  }
+                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                    if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      continue;
+                    }
+                  }
+                }
+                else if (allPossibleMoves[square.id][move].file === king.file || allPossibleMoves[square.id][move].rank === king.rank) {
+                  if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move])) {
+                    continue;
+                  }
+                }
+                else if (allPossibleMoves[square.id][move].id === piece) {
+                  continue;
+                }
+                else {
+                  delete allPossibleMoves[square.id][move];
+                }
+              }
+            }
+              break;
           }
-            break;
         }
       });
     }
@@ -177,6 +280,7 @@ function checkForCheck() {
   let numberOfWhiteMoves = 0;
   let numberOfBlackMoves = 0;
   let king = null;
+  isInCheck = '';
 
   for (let piece in board) {
     if (board[piece] instanceof King && board[piece].player !== this.player) {
@@ -196,7 +300,6 @@ function checkForCheck() {
     }
   }
 
-
   loadBoard(board);
 
   if (isInCheck) {
@@ -214,7 +317,6 @@ function checkForCheck() {
         if (!(board[square] instanceof King)) {
 
           moveCounter += allPossibleMoves[square].length;
-          // debugger;
 
         } else if (board[square] instanceof King) {
 

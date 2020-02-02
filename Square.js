@@ -70,7 +70,6 @@ class Square {
               //if the piece is a Pawn
               if (board[piece] instanceof Pawn) {
                 // if the position to be moved to is a possible move of a Pawn,
-                // debugger;
                 if (allPossibleMoves[piece].includes(possibleMoves[move])) {
                   //if the file of the position to be moved to is not the same as the file of the pawn, can't move there
                   if (possibleMoves[move].file !== board[piece].file) {
@@ -93,6 +92,45 @@ class Square {
               }
             }
           }
+          if (isInCheck === this.player) {
+            // let canMove = true;
+            for (let blockingPiece in blockingPieces) {
+
+              if (blockingPieces[blockingPiece].includes(this)) {
+
+                if (allPotentialMoves[blockingPiece].includes(possibleMoves[move])) {
+
+                  if (this.file < blockingPiece[0] && possibleMoves[move].file >= blockingPiece[0]) {
+                    continue;
+                  }
+
+                  if (this.file > blockingPiece[0] && possibleMoves[move].file <= blockingPiece[0]) {
+                    continue;
+                  }
+
+                  if (this.file === blockingPiece[0] && possibleMoves[move].file !== blockingPiece[0]) {
+                    continue;
+                  }
+
+                  if (this.rank < blockingPiece[1] && possibleMoves[move].rank >= blockingPiece[1]) {
+                    continue;
+                  }
+
+                  if (this.rank > blockingPiece[1] && possibleMoves[move].rank <= blockingPiece[1]) {
+                    continue;
+                  }
+
+                  if (this.rank === blockingPiece[1] && possibleMoves[move].rank !== blockingPiece[1]) {
+                    continue;
+                  }
+
+                  canMove = false;
+                  break;
+                }
+              }
+            }
+          }
+
           //if no opposing piece has possible moves for that position, the King can move there
           if (canMove && possibleMoves[move].player !== this.player && !allPossibleMoves[king].includes(possibleMoves[move])) {
             possibleMoves[move].div[0].style.backgroundColor = 'cyan';
@@ -228,9 +266,8 @@ class Square {
 
     }
 
-    isInCheck = '';
     threateningPieces = [];
-    blockingPieces = {};
+    // blockingPieces = {};
 
 
     for (let move in possibleMoves) {
