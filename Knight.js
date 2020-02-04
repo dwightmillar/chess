@@ -29,6 +29,7 @@ class Knight extends Square {
     this.checkMove(1, -2);
 
     this.checkMove(1, 2);
+    console.log(blockingPieces);
 
   }
 

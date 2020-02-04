@@ -60,7 +60,6 @@ class Square {
           }
         }
       } else if (activePiece instanceof King) {
-
         for (let move in possibleMoves) {
           let canMove = true;
           //for every piece on the board
@@ -92,6 +91,7 @@ class Square {
               }
             }
           }
+
           if (isInCheck === this.player) {
 
             for (let blockingPiece in blockingPieces) {
@@ -253,6 +253,18 @@ class Square {
         checkBlockingPieces();
 
         $('#pieceSelection').hide();
+      });
+      $('#selectKnight').click(function () {
+        let pawn = this.parentElement.children[0].id;
+        board[pawn] = new Knight(pawn[0], parseInt(pawn[1]), null, board[pawn].player, board[pawn].color, true);
+
+        switchTurns();
+        loadBoard(board);
+        checkForCheck();
+        checkBlockingPieces();
+
+        $('#pieceSelection').hide();
+
       });
 
     } else {
