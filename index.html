@@ -2,11 +2,19 @@
 <html>
   <head>
     <title>Chess</title>
-    <script src="jquery-3.4.1.min.js"></script>
-    <script src="moves.js"></script>
-    <script src="Square.js"></script>
-    <script src="main.js"></script>
     <link rel="stylesheet" type="text/css" href="board.css" />
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
+
+    <script src="Square.js"></script>
+    <script src="Pawn.js"></script>
+    <script src="Rook.js"></script>
+    <script src="Knight.js"></script>
+    <script src="Bishop.js"></script>
+    <script src="Queen.js"></script>
+    <script src="King.js"></script>
+    <script src="Board.js"></script>
+
   </head>
   <body>
     <header>
@@ -15,8 +23,34 @@
     <main>
       <!-- chessboard -->
     </main>
+    <div
+    id="pieceSelection"
+    style="
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.25);"
+    hidden>
+          <section style="
+            position: absolute;
+            background-color: white;
+            height: 200px;
+            width: 400px;
+            top: calc(50vh - 100px);
+            right: calc(50vw - 200px);
+            display: inline-block;">
+            <div hidden></div>
+            <button id="selectBishop">Bishop</button>
+            <button id="selectRook">Rook</button>
+            <button id="selectQueen">Queen</button>
+            <button id="selectKnight">Knight</button>
+          </section>
+    </div>
     <footer>
       <!-- captured pieces -->
     </footer>
   </body>
+  <script src="main.js"></script>
+
 </html>
