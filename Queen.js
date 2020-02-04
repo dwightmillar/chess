@@ -64,8 +64,7 @@ class Queen extends Square {
             allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
             //if the square is occupied by an opposing piece, stop checking
             if (targetPlayer) {
-              allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
-              potentialBlockingPiece = board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`];
+              blockingPieces[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
               checkPotentialMoves = true;
             }
             //if the square is occupied by the same player, stop checking
@@ -74,24 +73,15 @@ class Queen extends Square {
             checkPotentialMoves = true;
           }
         } else {
-          if (potentialBlockingPiece instanceof King) {
-            blockingPieces[this.id].push(potentialBlockingPiece);
-          }
+          // if (potentialBlockingPiece instanceof King) {
+          //   blockingPieces[this.id].push(potentialBlockingPiece);
+          // }
           //if the square is not occupied by the same player
           if (targetPlayer !== this.player) {
             //make the square a valid move
             allPotentialMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
-            //if the square is occupied by an opposing piece, stop checking
-            if (targetPlayer) {
-              if (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`] instanceof King) {
-                if (potentialBlockingPiece) {
-                  blockingPieces[this.id].push(potentialBlockingPiece);
-                }
-              }
-              break;
-            }
-
-          } else {
+          }
+          else {
             break;
           }
         }

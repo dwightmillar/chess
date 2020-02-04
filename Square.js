@@ -28,7 +28,7 @@ class Square {
     if (!activePiece) {
 
       activePiece = this;
-      activePiece.div[0].style.backgroundColor = 'yellow';
+      activePiece.div[0].style.backgroundImage = 'radial-gradient(white, yellow)';
 
       possibleMoves = allPossibleMoves[this.id];
 
@@ -45,7 +45,7 @@ class Square {
         if (possibleMoves[0]) {
           for (let move in possibleMoves) {
             if (possibleMoves[move].file === activePiece.file || (possibleMoves[move].player && possibleMoves[move].player !== this.player)) {
-              possibleMoves[move].div[0].style.backgroundColor = 'cyan';
+              possibleMoves[move].div[0].style.backgroundImage = 'radial-gradient(white, teal)';
               $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
             }
           }
@@ -54,7 +54,7 @@ class Square {
         if (possibleMoves[0]) {
           for (let move in possibleMoves) {
             if (possibleMoves[move].player !== this.player) {
-              possibleMoves[move].div[0].style.backgroundColor = 'cyan';
+              possibleMoves[move].div[0].style.backgroundImage = 'radial-gradient(white, teal)';
               $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
             }
           }
@@ -100,44 +100,31 @@ class Square {
 
                 if (allPotentialMoves[blockingPiece].includes(possibleMoves[move])) {
 
-                  if (this.file < blockingPiece[0] && possibleMoves[move].file >= blockingPiece[0]) {
-                    if (this.rank < blockingPiece[1] && possibleMoves[move].rank >= blockingPiece[1]) {
+                  if (this.file === blockingPiece[0]) {
+                    if (possibleMoves[move].file !== blockingPiece[0]) {
                       continue;
                     }
-
-                    if (this.rank > blockingPiece[1] && possibleMoves[move].rank <= blockingPiece[1]) {
+                  } else if (this.file < blockingPiece[0]) {
+                    if (possibleMoves[move].file >= this.file || possibleMoves[move].file >= blockingPiece[0]) {
                       continue;
                     }
-
-                    if (this.rank === blockingPiece[1] && possibleMoves[move].rank !== blockingPiece[1]) {
-                      continue;
-                    }
-                  }
-
-                  if (this.file > blockingPiece[0] && possibleMoves[move].file <= blockingPiece[0]) {
-                    if (this.rank < blockingPiece[1] && possibleMoves[move].rank >= blockingPiece[1]) {
-                      continue;
-                    }
-
-                    if (this.rank > blockingPiece[1] && possibleMoves[move].rank <= blockingPiece[1]) {
-                      continue;
-                    }
-
-                    if (this.rank === blockingPiece[1] && possibleMoves[move].rank !== blockingPiece[1]) {
+                  } else if (this.file > blockingPiece[0]) {
+                    if (possibleMoves[move].file <= this.file || possibleMoves[move].file <= blockingPiece[0]) {
                       continue;
                     }
                   }
 
-                  if (this.file === blockingPiece[0] && possibleMoves[move].file !== blockingPiece[0]) {
-                    if (this.rank < blockingPiece[1] && possibleMoves[move].rank >= blockingPiece[1]) {
+
+                  if (this.rank === blockingPiece[1]) {
+                    if (possibleMoves[move].rank !== blockingPiece[1]) {
                       continue;
                     }
-
-                    if (this.rank > blockingPiece[1] && possibleMoves[move].rank <= blockingPiece[1]) {
+                  } else if (this.rank < blockingPiece[1]) {
+                    if (possibleMoves[move].rank >= this.rank || possibleMoves[move].rank >= blockingPiece[1]) {
                       continue;
                     }
-
-                    if (this.rank === blockingPiece[1] && possibleMoves[move].rank !== blockingPiece[1]) {
+                  } else if (this.rank > blockingPiece[1]) {
+                    if (possibleMoves[move].rank <= this.rank || possibleMoves[move].rank <= blockingPiece[1]) {
                       continue;
                     }
                   }
@@ -151,7 +138,7 @@ class Square {
 
           //if no opposing piece has possible moves for that position, the King can move there
           if (canMove && possibleMoves[move].player !== this.player && !allPossibleMoves[king].includes(possibleMoves[move])) {
-            possibleMoves[move].div[0].style.backgroundColor = 'cyan';
+            possibleMoves[move].div[0].style.backgroundImage = 'radial-gradient(white, teal)';
             $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
           }
         }
@@ -163,7 +150,7 @@ class Square {
         if (possibleMoves.length > 0) {
           for (let move in possibleMoves) {
             if (possibleMoves[move].player !== this.player) {
-              possibleMoves[move].div[0].style.backgroundColor = 'cyan';
+              possibleMoves[move].div[0].style.backgroundImage = 'radial-gradient(white, teal)';
               $(`#${possibleMoves[move].div[0].id}`).click(() => this.moveTo(possibleMoves, move));
             }
           }
@@ -171,13 +158,13 @@ class Square {
       }
 
     } else if (activePiece === this) {
-      activePiece.div[0].style.backgroundColor = activePiece.color;
+      activePiece.div[0].style.backgroundImage = null;
 
       activePiece = '';
       possibleMoves = allPossibleMoves[this.id];
 
       for (let move in possibleMoves) {
-        possibleMoves[move].div[0].style.backgroundColor = possibleMoves[move].color;
+        possibleMoves[move].div[0].style.backgroundImage = null;
         $(`#${possibleMoves[move].div[0].id}`).off();
       }
     }
@@ -301,10 +288,10 @@ class Square {
 
 
     for (let move in possibleMoves) {
-      possibleMoves[move].div[0].style.backgroundColor = possibleMoves[move].color;
+      possibleMoves[move].div[0].style.backgroundImage = null;
     }
 
-    activePiece.div[0].style.backgroundColor = activePiece.color;
+    activePiece.div[0].style.backgroundImage = null;
     possibleMoves = [];
     activePiece = '';
   }
