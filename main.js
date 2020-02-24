@@ -496,10 +496,14 @@ function checkForCheck() {
 
 
 
-function switchTurns() {
-  if (playerTurn === 'white') {
-    playerTurn = 'black';
+function switchTurns(overrideTurn) {
+  if (overrideTurn) {
+    playerTurn = overrideTurn;
   } else {
-    playerTurn = 'white';
+    if (playerTurn === 'white') {
+      playerTurn = 'black';
+    } else {
+      playerTurn = 'white';
+    }
   }
 }

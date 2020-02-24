@@ -209,8 +209,12 @@ class Square {
       $('#selectBishop').click(function() {
         let pawn = this.parentElement.children[0].id;
         board[pawn] = new Bishop(pawn[0], parseInt(pawn[1]), null, board[pawn].player, board[pawn].color, true);
+        playerTurn = 'black';
+        if (board[pawn].player === 'black') {
+          playerTurn = 'white';
+        }
 
-        switchTurns();
+        switchTurns(playerTurn);
         loadBoard(board);
         checkForCheck();
         checkBlockingPieces();
@@ -221,8 +225,12 @@ class Square {
       $('#selectRook').click(function() {
         let pawn = this.parentElement.children[0].id;
         board[pawn] = new Rook(pawn[0], parseInt(pawn[1]), null, board[pawn].player, board[pawn].color, true);
+        playerTurn = 'black';
+        if (board[pawn].player === 'black') {
+          playerTurn = 'white';
+        }
 
-        switchTurns();
+        switchTurns(playerTurn);
         loadBoard(board);
         checkForCheck();
         checkBlockingPieces();
@@ -233,8 +241,12 @@ class Square {
       $('#selectQueen').click(function() {
         let pawn = this.parentElement.children[0].id;
         board[pawn] = new Queen(pawn[0], parseInt(pawn[1]), null, board[pawn].player, board[pawn].color, true);
+        playerTurn = 'black';
+        if (board[pawn].player === 'black') {
+          playerTurn = 'white';
+        }
 
-        switchTurns();
+        switchTurns(playerTurn);
         loadBoard(board);
         checkForCheck();
         checkBlockingPieces();
