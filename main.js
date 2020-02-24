@@ -83,6 +83,7 @@ function checkBlockingPieces() {
               //for every move of the king
               for (let move in allPossibleMoves[square.id]) {
                 if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) && (allPossibleMoves[square.id][move].file === king.file || allPossibleMoves[square.id][move].rank === king.rank)) {
+                  
                   delete allPossibleMoves[square.id][move];
                 } else {
                   continue;
@@ -99,11 +100,12 @@ function checkBlockingPieces() {
                 if (piece[0] > allPossibleMoves[square.id][move].file && square.file < allPossibleMoves[square.id][move].file) {
                   if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
                     if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      
                       delete allPossibleMoves[square.id][move];
                     }
-                  }
-                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                  } else if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
                     if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      
                       delete allPossibleMoves[square.id][move];
                     }
                   }
@@ -111,11 +113,12 @@ function checkBlockingPieces() {
                 else if (piece[0] < allPossibleMoves[square.id][move].file && square.file > allPossibleMoves[square.id][move].file) {
                   if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
                     if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      
                       delete allPossibleMoves[square.id][move];
                     }
-                  }
-                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                  } else if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
                     if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      
                       delete allPossibleMoves[square.id][move];
                     }
                   }
@@ -137,11 +140,12 @@ function checkBlockingPieces() {
                 if (piece[0] > allPossibleMoves[square.id][move].file && square.file < allPossibleMoves[square.id][move].file) {
                   if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
                     if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      
                       delete allPossibleMoves[square.id][move];
                     }
-                  }
-                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                  } else if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
                     if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      
                       delete allPossibleMoves[square.id][move];
                     }
                   }
@@ -149,17 +153,19 @@ function checkBlockingPieces() {
                 else if (piece[0] < allPossibleMoves[square.id][move].file && square.file > allPossibleMoves[square.id][move].file) {
                   if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
                     if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      
                       delete allPossibleMoves[square.id][move];
                     }
-                  }
-                  if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
+                  } else if (piece[1] < allPossibleMoves[square.id][move].rank && square.rank > allPossibleMoves[square.id][move].rank) {
                     if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
+                      
                       delete allPossibleMoves[square.id][move];
                     }
                   }
                 }
                 else if (allPossibleMoves[square.id][move].file === king.file || allPossibleMoves[square.id][move].rank === king.rank) {
                   if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move])) {
+                    
                     delete allPossibleMoves[square.id][move];
                   }
                 }
@@ -173,7 +179,8 @@ function checkBlockingPieces() {
             }
               break;
           } //end of switch
-        } else {
+        } else if (allPotentialMoves[piece].includes(board[king]))
+        {
           //what is the threatening piece?
           switch (board[piece].constructor) {
             case Rook: {
@@ -181,6 +188,7 @@ function checkBlockingPieces() {
                 if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) && (allPossibleMoves[square.id][move].file === king.file || allPossibleMoves[square.id][move].rank === king.rank)) {
                   continue;
                 } else {
+                  
                   delete allPossibleMoves[square.id][move];
                 }
               }
@@ -220,6 +228,7 @@ function checkBlockingPieces() {
                   continue;
                 }
                 else {
+                  
                   delete allPossibleMoves[square.id][move];
                 }
               }
@@ -230,8 +239,11 @@ function checkBlockingPieces() {
                 //"piece" is potentially threatening piece, "square" is the blocking piece,
                 // "move" is a possible move of the blocking piece
 
+                //if the possible move is between the files of the potentially threatening piece and the blocking piece
                 if (piece[0] > allPossibleMoves[square.id][move].file && square.file < allPossibleMoves[square.id][move].file) {
+                  //if the possible move is between the ranks of the potentially threatening piece and the blocking piece
                   if (piece[1] > allPossibleMoves[square.id][move].rank && square.rank < allPossibleMoves[square.id][move].rank) {
+                    //if the possible move of the blocking piece is a possible move of the potentially threatening piece
                     if (allPossibleMoves[piece].includes(allPossibleMoves[square.id][move]) || allPossibleMoves[square.id][move].id === piece) {
                       continue;
                     }
@@ -263,11 +275,12 @@ function checkBlockingPieces() {
                   continue;
                 }
                 else {
+                  
                   delete allPossibleMoves[square.id][move];
                 }
               }
             }
-              break;
+            break;
           }
         }
       });
@@ -319,7 +332,7 @@ function checkForCheck() {
           moveCounter += allPossibleMoves[square].length;
 
         } else if (board[square] instanceof King) {
-          // debugger;
+          // 
 
           //for every possible move of the King
           for (let move in allPossibleMoves[square]) {
