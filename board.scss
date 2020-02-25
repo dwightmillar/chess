@@ -1,4 +1,4 @@
-$boardLength: 100vh;
+$boardLength: 80vh;
 
 body {
   margin: 0;
@@ -8,13 +8,20 @@ body {
   height: 100vh;
 }
 
+header {
+  height: 10vh;
+  min-height: 100px;
+}
+
 .select:hover {
   background-color: rgba(0, 232, 255, 0.3);
 }
 
 main {
   height: $boardLength;
+  max-height: 90vh;
   width: $boardLength;
+  max-width: 100vw;
   margin: auto;
 }
 

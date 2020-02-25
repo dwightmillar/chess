@@ -17,7 +17,12 @@
   window.onload = loadBoard(board);
 
 if (playerTurn) {
-  console.log(`It's ${playerTurn}'s turn!`);
+  $('header').text(`It's ${playerTurn}'s turn!`);
+  if (playerTurn === 'white') {
+    $('header').css({'color':'white','text-shadow':'-1px -1px 0 #808080, 1px -1px 0 #808080, -1px 1px 0 #808080, 1px 1px 0 #808080'}); 
+  } else {
+    $('header').css({'color':'black','text-shadow':'-1px -1px 0 #808080, 1px -1px 0 #808080, -1px 1px 0 #808080, 1px 1px 0 #808080'}); 
+  }
 }
 
   function loadBoard(boardData) {
@@ -308,6 +313,10 @@ function checkForCheck() {
       if (Object.values(allPossibleMoves[piece])[space] instanceof King && Object.values(allPossibleMoves[piece])[space].player !== board[piece].player) {
         isInCheck = Object.values(allPossibleMoves[piece])[space].player;
         threateningPieces.push(piece);
+        for (let threateningPiece in threateningPieces) {
+          board[threateningPieces[threateningPiece]].div[0].style.backgroundImage = 'radial-gradient(pink, red)';
+          console.log(allPossibleMoves[threateningPieces[threateningPiece]]);
+        }
         checkMessage = `${playerTurn}`[0].toUpperCase() + `${playerTurn.slice(1)} is put in check by ${board[piece].piece[0].classList[1]}[${piece[0].toUpperCase() + piece[1]}]`;
       }
     }
@@ -317,7 +326,7 @@ function checkForCheck() {
 
   if (isInCheck) {
 
-    console.log(checkMessage);
+    $('header').text('Check!');
 
     let moveCounter = 0;
 
@@ -376,7 +385,7 @@ function checkForCheck() {
       }
     }
     if (moveCounter === 0) {
-      console.log('Checkmate!');
+      $('header').text('Checkmate!');
       playerTurn = null;
     }
   } else {
@@ -488,7 +497,17 @@ function checkForCheck() {
     }
   }
   if (playerTurn) {
-    console.log(`It's ${playerTurn}'s turn!`);
+    if ($('header').text() === 'Check!') {
+      $('header').text(`Check! It's ${playerTurn}'s turn!`);
+    } else {
+      $('header').text(`It's ${playerTurn}'s turn!`);
+    }
+
+    if (playerTurn === 'white') {
+      $('header').css({'color':'white','text-shadow':'-1px -1px 0 #808080, 1px -1px 0 #808080, -1px 1px 0 #808080, 1px 1px 0 #808080'}); 
+    } else {
+      $('header').css({'color':'black','text-shadow':'-1px -1px 0 #808080, 1px -1px 0 #808080, -1px 1px 0 #808080, 1px 1px 0 #808080'}); 
+    }
   }
 }
 
