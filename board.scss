@@ -8,6 +8,10 @@ body {
   height: 100vh;
 }
 
+.select:hover {
+  background-color: rgba(0, 232, 255, 0.3);
+}
+
 main {
   height: $boardLength;
   width: $boardLength;

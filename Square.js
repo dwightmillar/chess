@@ -206,8 +206,20 @@ class Square {
       $('#pieceSelection').show();
       $('#pieceSelection')[0].children[0].children[0].id = possibleMoves[move].id;
 
+      if (activePiece.color === 'white'){
+        $('#selectBishop').css("background-image", 'url(images/bishop-white.png)');
+        $('#selectRook').css("background-image", 'url(images/rook-white.png)');
+        $('#selectQueen').css("background-image", 'url(images/queen-white.png)');
+        $('#selectKnight').css("background-image", 'url(images/knight-white.png)');
+      } else {
+        $('#selectBishop').css("background-image", 'url(images/bishop-black.png)');
+        $('#selectRook').css("background-image", 'url(images/rook-black.png)');
+        $('#selectQueen').css("background-image", 'url(images/queen-black.png)');
+        $('#selectKnight').css("background-image", 'url(images/knight-black.png)');
+      }
+      
       $('#selectBishop').click(function() {
-        let pawn = this.parentElement.children[0].id;
+        let pawn = this.parentElement.parentElement.children[0].id;
         board[pawn] = new Bishop(pawn[0], parseInt(pawn[1]), null, board[pawn].player, board[pawn].color, true);
         playerTurn = 'black';
         if (board[pawn].player === 'black') {
@@ -223,7 +235,7 @@ class Square {
 
       });
       $('#selectRook').click(function() {
-        let pawn = this.parentElement.children[0].id;
+        let pawn = this.parentElement.parentElement.children[0].id;
         board[pawn] = new Rook(pawn[0], parseInt(pawn[1]), null, board[pawn].player, board[pawn].color, true);
         playerTurn = 'black';
         if (board[pawn].player === 'black') {
@@ -239,7 +251,7 @@ class Square {
 
       });
       $('#selectQueen').click(function() {
-        let pawn = this.parentElement.children[0].id;
+        let pawn = this.parentElement.parentElement.children[0].id;
         board[pawn] = new Queen(pawn[0], parseInt(pawn[1]), null, board[pawn].player, board[pawn].color, true);
         playerTurn = 'black';
         if (board[pawn].player === 'black') {
@@ -254,7 +266,7 @@ class Square {
         $('#pieceSelection').hide();
       });
       $('#selectKnight').click(function () {
-        let pawn = this.parentElement.children[0].id;
+        let pawn = this.parentElement.parentElement.children[0].id;
         board[pawn] = new Knight(pawn[0], parseInt(pawn[1]), null, board[pawn].player, board[pawn].color, true);
 
         switchTurns();
