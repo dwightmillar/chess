@@ -100,132 +100,119 @@ class Rook extends Square {
         }
       }
     } else {
+      // while the position to be checked exists
+      if (threateningPieces.length > 1) {
+        return;
+      }
+      while (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]) {
 
-      let blockingMoves = [];
+        //make the square a valid move
+        if (allPossibleMoves[threateningPieces[0]].includes(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`])) {
+          switch(threateningPieces[0].constructor.name) {
+            case 'Rook': {
+              if (`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` === threateningPieces[0].file) {
+                if (`${this.rank + verticalSquareCount}` > threateningPieces[0].rank && `${this.rank + verticalSquareCount}` < king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
 
-      let king = null;
+                } 
+                else if (`${this.rank + verticalSquareCount}` < threateningPieces[0].rank && `${this.rank + verticalSquareCount}` > king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
 
-      let rankLimit = null;
-      let rankIndex = null;
+                }
+              } 
+              else if (`${this.rank + verticalSquareCount}` === threateningPieces[0].rank) {
+                if (`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` > threateningPieces[0].file && `${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` < king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
 
-      let fileLimit = null;
-      let fileIndex = null;
+                } 
+                else if (`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` < threateningPieces[0].file && `${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` > king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
 
-      let fileOffset = null;
+                }
+              }
+            } break;
+            case 'Bishop': {
+              if (`${this.rank + verticalSquareCount}` < threateningPieces[0].rank && `${this.rank + verticalSquareCount}` > king[0]) {
+                if (`${this.rank + verticalSquareCount}` > threateningPieces[0].rank && `${this.rank + verticalSquareCount}` < king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
 
-      // KING DEFINITON
+                } 
+                else if (`${this.rank + verticalSquareCount}` < threateningPieces[0].rank && `${this.rank + verticalSquareCount}` > king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
 
-      for (let piece in board) {
-        if (board[piece] instanceof King && board[piece].player === this.player) {
-          king = piece;
-          break;
+                }
+              } 
+              else if (`${this.rank + verticalSquareCount}` > threateningPieces[0].rank && `${this.rank + verticalSquareCount}` < king[0]) {
+                if (`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` > threateningPieces[0].file && `${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` < king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+
+                } 
+                else if (`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` < threateningPieces[0].file && `${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` > king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+
+                }
+              }
+
+            } break;
+            case 'Queen': {
+              if (`${this.rank + verticalSquareCount}` < threateningPieces[0].rank && `${this.rank + verticalSquareCount}` > king[0]) {
+                if (`${this.rank + verticalSquareCount}` > threateningPieces[0].rank && `${this.rank + verticalSquareCount}` < king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+
+                } 
+                else if (`${this.rank + verticalSquareCount}` < threateningPieces[0].rank && `${this.rank + verticalSquareCount}` > king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+
+                }
+              } 
+              else if (`${this.rank + verticalSquareCount}` > threateningPieces[0].rank && `${this.rank + verticalSquareCount}` < king[0]) {
+                if (`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` > threateningPieces[0].file && `${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` < king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+
+                } 
+                else if (`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` < threateningPieces[0].file && `${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` > king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+
+                }
+              } else if (`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` === threateningPieces[0].file) {
+                if (`${this.rank + verticalSquareCount}` > threateningPieces[0].rank && `${this.rank + verticalSquareCount}` < king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+
+                } 
+                else if (`${this.rank + verticalSquareCount}` < threateningPieces[0].rank && `${this.rank + verticalSquareCount}` > king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+
+                }
+              } 
+              else if (`${this.rank + verticalSquareCount}` === threateningPieces[0].rank) {
+                if (`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` > threateningPieces[0].file && `${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` < king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+
+                } 
+                else if (`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` < threateningPieces[0].file && `${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}` > king[1]) {
+                  allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+
+                }
+              }
+            } break;
+            default: {
+
+            }
+          }
+        }
+
+        if (horizontalSquareCount < 0) {
+          --horizontalSquareCount;
+        } else if (horizontalSquareCount > 0) {
+          ++horizontalSquareCount;
+        }
+
+        if (verticalSquareCount < 0) {
+          --verticalSquareCount;
+        } else if (verticalSquareCount > 0) {
+          ++verticalSquareCount;
         }
       }
-
-
-      threateningPieces.forEach(threateningPiece => {
-        // RANKLIMIT/RANKINDEX DEFINITON
-
-        parseInt(threateningPiece[1]) > parseInt(king[1]) ?
-          rankLimit = parseInt(threateningPiece[1]) :
-          rankLimit = parseInt(king[1]);
-
-        parseInt(threateningPiece[1]) < parseInt(king[1]) ?
-          rankIndex = parseInt(threateningPiece[1]) :
-          rankIndex = parseInt(king[1]);
-
-        // FILELIMIT/FILEINDEX DEFINITION
-
-        files.findIndex((element) => element === threateningPiece[0]) > files.findIndex((element) => element === king[0]) ?
-          fileLimit = files.findIndex((element) => element === threateningPiece[0]) :
-          fileLimit = files.findIndex((element) => element === king[0]);
-
-        files.findIndex((element) => element === threateningPiece[0]) < files.findIndex((element) => element === king[0]) ?
-          fileIndex = files.findIndex((element) => element === threateningPiece[0]) :
-          fileIndex = files.findIndex((element) => element === king[0]);
-
-        // BLOCKINGMOVES DEFINITION
-
-        switch (board[threateningPiece].constructor.name) {
-          case 'Rook': {
-
-            if (rankIndex === rankLimit) {
-              for (fileIndex; fileIndex < fileLimit; fileIndex++) {
-                blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
-              }
-            } else {
-              for (rankIndex; rankIndex < rankLimit; rankIndex++) {
-                blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
-              }
-            }
-
-          } break;
-          case 'Bishop': {
-            fileOffset = 0;
-
-            for (rankIndex; rankIndex < rankLimit; rankIndex++) {
-              blockingMoves.push(`${files[fileIndex + fileOffset]}${rankIndex}`);
-              ++fileOffset;
-            }
-
-          } break;
-          case 'Queen': {
-            fileOffset = 0;
-
-            if (rankIndex === rankLimit) {
-              for (fileIndex; fileIndex < fileLimit; fileIndex++) {
-                blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
-              }
-            }
-
-            else if (fileIndex === fileLimit) {
-              for (rankIndex; rankIndex < rankLimit; rankIndex++) {
-                blockingMoves.push(`${files[fileIndex]}${rankIndex}`);
-              }
-            }
-
-            else {
-              for (rankIndex; rankIndex < rankLimit; rankIndex++) {
-                blockingMoves.push(`${files[fileIndex + fileOffset]}${rankIndex}`);
-                ++fileOffset;
-              }
-            }
-          }
-        }
-
-        while (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]) {
-
-          targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`].player;
-
-          if (!targetPlayer || targetPlayer === opponent) {
-            if (blockingMoves.findIndex((element) => element === board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`].id) > 0) {
-              allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
-            }
-            if (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`].id === threateningPiece) {
-              allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
-            }
-            if (targetPlayer === opponent) {
-              break;
-            }
-
-          } else {
-            break;
-          }
-
-          if (horizontalSquareCount < 0) {
-            --horizontalSquareCount;
-          } else if (horizontalSquareCount > 0) {
-            ++horizontalSquareCount;
-          }
-
-          if (verticalSquareCount < 0) {
-            --verticalSquareCount;
-          } else if (verticalSquareCount > 0) {
-            ++verticalSquareCount;
-          }
-        }
-      })
     }
-
   }
 }

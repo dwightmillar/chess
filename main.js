@@ -315,7 +315,7 @@ function checkForCheck() {
         threateningPieces.push(piece);
         for (let threateningPiece in threateningPieces) {
           board[threateningPieces[threateningPiece]].div[0].style.backgroundImage = 'radial-gradient(pink, red)';
-          console.log(allPossibleMoves[threateningPieces[threateningPiece]]);
+          // console.log(allPossibleMoves[threateningPieces[threateningPiece]]);
         }
         checkMessage = `${playerTurn}`[0].toUpperCase() + `${playerTurn.slice(1)} is put in check by ${board[piece].piece[0].classList[1]}[${piece[0].toUpperCase() + piece[1]}]`;
       }
