@@ -105,7 +105,9 @@ class Rook extends Square {
         return;
       }
       while (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]) {
-
+        if (`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}` === threateningPieces[0]) {
+          allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+        }
         //make the square a valid move
         if (allPossibleMoves[threateningPieces[0]].includes(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`])) {
           switch(threateningPieces[0].constructor.name) {

@@ -332,9 +332,10 @@ function checkForCheck() {
 
     //for every square on the board
     for (let square in board) {
+
       //if it's controlled by the checked player
       if (board[square].player === isInCheck) {
-
+        
         //add up all the possible moves of non-King pieces
         if (!(board[square] instanceof King)) {
 
@@ -349,6 +350,7 @@ function checkForCheck() {
             //for every piece on the board
             for (let piece in board) {
               //if the piece is an opponent
+
               if (board[piece].player && board[piece].player !== isInCheck) {
 
                 //if the piece is a Pawn
@@ -384,6 +386,7 @@ function checkForCheck() {
         }
       }
     }
+
     if (moveCounter === 0) {
       $('header').text('Checkmate!');
       playerTurn = null;
@@ -492,7 +495,7 @@ function checkForCheck() {
       }
     }
     if (whiteMoveCount === 0 || blackMoveCount === 0) {
-      console.log('Stalemate!');
+      $('header').text(`Stalemate!`);
       playerTurn = null;
     }
   }

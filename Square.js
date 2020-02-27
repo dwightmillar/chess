@@ -318,5 +318,6 @@ class Square {
     activePiece.div[0].style.backgroundImage = null;
     possibleMoves = [];
     activePiece = '';
+    isInCheck = '';
   }
 }
