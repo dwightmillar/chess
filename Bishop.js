@@ -71,7 +71,7 @@ class Bishop extends Square {
           //if the square is not occupied by the same player
           if (targetPlayer !== this.player) {
             //make the square a valid move
-            allPotentialMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+            allPotentialMoves[this.id].push(`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`);
             //if the square is occupied by an opposing piece, stop checking
             if (targetPlayer) {
               if (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`] instanceof King) {
@@ -197,9 +197,6 @@ class Bishop extends Square {
                 }
               }
             } break;
-            default: {
-
-            }
           }
         }
 

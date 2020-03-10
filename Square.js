@@ -98,7 +98,7 @@ class Square {
 
               if (blockingPieces[blockingPiece].includes(this)) {
 
-                if (allPotentialMoves[blockingPiece].includes(possibleMoves[move])) {
+                if (allPotentialMoves[blockingPiece].indexOf(move)) {
 
                   if (this.file === blockingPiece[0]) {
                     if (possibleMoves[move].file !== blockingPiece[0]) {
@@ -175,6 +175,7 @@ class Square {
     if (!activePiece) {
       return;
     }
+
 
     var target = board[possibleMoves[move].id];
     let king = null;
@@ -307,13 +308,14 @@ class Square {
 
     }
 
-    threateningPieces = [];
     // blockingPieces = {};
 
 
     for (let move in possibleMoves) {
       possibleMoves[move].div[0].style.backgroundImage = null;
     }
+
+    threateningPieces = [];
 
     activePiece.div[0].style.backgroundImage = null;
     possibleMoves = [];

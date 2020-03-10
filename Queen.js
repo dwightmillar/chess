@@ -73,13 +73,13 @@ class Queen extends Square {
             checkPotentialMoves = true;
           }
         } else {
-          // if (potentialBlockingPiece instanceof King) {
-          //   blockingPieces[this.id].push(potentialBlockingPiece);
-          // }
+          if (potentialBlockingPiece instanceof King) {
+            blockingPieces[this.id].push(potentialBlockingPiece);
+          }
           //if the square is not occupied by the same player
           if (targetPlayer !== this.player) {
             //make the square a valid move
-            allPotentialMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+            allPotentialMoves[this.id].push(`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`);
           }
           else {
             break;
@@ -104,10 +104,15 @@ class Queen extends Square {
         return;
       }
       while (board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]) {
+        
+        targetPlayer = board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`].player;
+
         if (`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}` === threateningPieces[0]) {
           allPossibleMoves[this.id].push(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`]);
+        } else if (targetPlayer) {
+
         }
-        //make the square a valid move
+
         if (allPossibleMoves[threateningPieces[0]].includes(board[`${files[files.findIndex((element) => element === this.file) + horizontalSquareCount]}${this.rank + verticalSquareCount}`])) {
           switch(threateningPieces[0].constructor.name) {
             case 'Rook': {
